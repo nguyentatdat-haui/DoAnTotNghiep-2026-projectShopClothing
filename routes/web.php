@@ -8,6 +8,7 @@ use App\Middleware\MiddlewareHelper;
 
 // Home routes - có thể truyền số lần request tùy ý
 $router->get('/', [HomeController::class, 'index'], [MiddlewareHelper::rateLimit()]); // 1 request/second
+$router->get('/company', [HomeController::class, 'company']);
 
 // Shop / Products
 $router->get('/products', [ProductController::class, 'index']);
