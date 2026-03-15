@@ -1,0 +1,30 @@
+# basic
+.DS_Store
+Thumbs.db
+.htaccess
+.env
+*.log
+error_log
+
+# untrack upload files
+/public/uploads
+
+# sitemap service
+/sitemaps
+/robots.php
+
+# Cache
+/storage/cache/*
+!/storage/cache/.gitkeep
+
+# Logs
+/storage/logs/*
+!/storage/logs/.gitkeep
+
+# Migrations
+/storage/migrations/*
+!/storage/migrations/.gitkeep
+
+# Database
+/storage/databases/*
+!/storage/databases/.gitkeep

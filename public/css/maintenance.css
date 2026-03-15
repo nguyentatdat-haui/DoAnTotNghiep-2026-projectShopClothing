@@ -1,0 +1,46 @@
+.container {
+    text-align: center;
+}
+
+.illustration {
+    margin-bottom: 30px;
+}
+
+.illustration img {
+    max-width: 100%;
+    height: auto;
+}
+
+.maintenance-message {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.back-to-home-button {
+    display: inline-block;
+    background-color: #EC008C;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.back-to-home-button:hover {
+    background-color: #EC008C;
+}
+
+
+header {
+    display: none;
+}
+
+footer {
+    display: none;
+}
+
+.main-footer {
+    display: none;
+}

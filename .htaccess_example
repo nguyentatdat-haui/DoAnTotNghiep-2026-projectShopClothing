@@ -1,0 +1,22 @@
+# Redirect all requests to public/index.php (works in subfolder)
+RewriteEngine On
+
+# Skip if requesting files under public directly
+RewriteRule ^public/ - [L]
+
+# If the requested resource doesn't exist, route to public/index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ public/index.php [L]
+
+# Protect .env file
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Protect sensitive files
+<FilesMatch "\.(sql|md|txt)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
