@@ -6,7 +6,7 @@ $headerCategories = $categories ?? [];
         <div class="header-container">
             <div class="header-logo">
                 <a href="<?= base_url() ?>">
-                    <img src="<?= asset('images/home/logo-ngang.svg') ?>" alt="MARNI.Store" class="logo">
+                    <img src="<?= asset('images/home/mainlogo.svg') ?>" alt="MARNI.Store" class="logo">
                 </a>
             </div>
             <nav class="header-nav">

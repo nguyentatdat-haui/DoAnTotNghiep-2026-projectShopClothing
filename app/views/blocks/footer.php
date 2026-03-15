@@ -4,7 +4,7 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <a href="<?= $base ?>" class="footer-logo-link">
-                    <img src="<?= asset('images/home/logo-ngang.svg') ?>" alt="<?= htmlspecialchars(env('SITENAME') ?: 'Store') ?>" class="footer-logo">
+                    <img src="<?= asset('images/home/mainlogo.svg') ?>" alt="<?= htmlspecialchars(env('SITENAME') ?: 'Store') ?>" class="footer-logo">
                 </a>
                 <p class="footer-tagline">Discover the latest products and special offers.</p>
             </div>

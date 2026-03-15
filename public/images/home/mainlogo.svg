@@ -1,0 +1,25 @@
+<svg width="700" height="220" viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff3cac;stop-opacity:1"></stop>
+      <stop offset="100%" style="stop-color:#784ba0;stop-opacity:1"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon -->
+  <g transform="translate(60,50)">
+    <rect x="0" y="30" width="110" height="70" rx="15" fill="url(#grad1)"></rect>
+    <path d="M20 30 L55 5 L90 30" stroke="white" stroke-width="6" fill="none"></path>
+  </g>
+
+  <!-- Brand name -->
+  <text x="220" y="100" font-family="Poppins, Arial, sans-serif" font-size="56" font-weight="800" fill="#111">
+        Clothing
+  </text>
+
+  <text x="220" y="150" font-family="Poppins, Arial, sans-serif" font-size="42" font-weight="700" fill="url(#grad1)" letter-spacing="6">
+        SHOP
+  </text>
+
+</svg>
