@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 // Basic security headers
 // header('X-Frame-Options: DENY');
@@ -26,8 +29,8 @@ $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Normalize URI by removing base paths when app is in subfolder
-$scriptDir = dirname($_SERVER['SCRIPT_NAME']);        // e.g. /mvc_base
-$baseDir   = dirname($scriptDir);                     // e.g. /
+$scriptDir = dirname($_SERVER['SCRIPT_NAME']);
+$baseDir   = dirname($scriptDir);
 
 foreach ([$scriptDir, $baseDir] as $basePath) {
     if ($basePath && $basePath !== '/' && $basePath !== '\\') {
@@ -48,7 +51,7 @@ if ($method === 'POST' && isset($_POST['_method'])) {
 
 // Dispatch the request and output the response
 $response = $router->dispatch($uri, $method);
+
 if (is_string($response)) {
     echo $response;
 }
-?>
