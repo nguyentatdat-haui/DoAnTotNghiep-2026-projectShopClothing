@@ -3,15 +3,6 @@ $base = rtrim(base_url(), '/');
 $featured = $featured_products ?? [];
 $newArrivals = $new_arrivals ?? [];
 $bestSellers = $best_sellers ?? [];
-// Banner & ad slots (image có thể là path uploads/banners/xxx hoặc URL đầy đủ)
-$banner_main = $banner_main ?? null;
-$banner_mid  = $banner_mid ?? null;
-$ad_slots    = $ad_slots ?? [];
-function home_banner_img_src($url) {
-    if (empty($url)) return '';
-    if (strpos($url, 'http') === 0 || strpos($url, '//') === 0 || (strlen($url) > 0 && $url[0] === '/')) return $url;
-    return asset($url);
-}
 
 function home_product_card($p, $base) {
     $isObj = is_object($p);
@@ -121,18 +112,6 @@ function home_product_card($p, $base) {
         });
     </script>
 
-    <!-- Main banner (full-width) -->
-    <?php if (!empty($banner_main['image'])): 
-        $mainImgSrc = home_banner_img_src($banner_main['image']);
-        $mainLink = !empty($banner_main['link']) ? $banner_main['link'] : ($base . '/products');
-    ?>
-    <section class="home-banner home-banner--main" aria-label="Banner chính">
-        <a href="<?= htmlspecialchars($mainLink) ?>" class="home-banner-link home-banner-link--main">
-            <img src="<?= htmlspecialchars($mainImgSrc) ?>" alt="<?= htmlspecialchars($banner_main['alt'] ?? 'Banner') ?>" class="home-banner-img" loading="lazy">
-        </a>
-    </section>
-    <?php endif; ?>
-
     <?php if (!empty($newArrivals)): ?>
     <section class="home-section home-section--alt">
         <div class="shop-container">
@@ -143,18 +122,6 @@ function home_product_card($p, $base) {
             </ul>
             <p class="home-section-link"><a href="<?= $base ?>/products" class="pagination-link">Xem tất cả sản phẩm mới</a></p>
         </div>
-    </section>
-    <?php endif; ?>
-
-    <!-- Banner giữa trang -->
-    <?php if (!empty($banner_mid['image'])): 
-        $midImgSrc = home_banner_img_src($banner_mid['image']);
-        $midLink = !empty($banner_mid['link']) ? $banner_mid['link'] : ($base . '/products');
-    ?>
-    <section class="home-banner home-banner--mid" aria-label="Banner giữa">
-        <a href="<?= htmlspecialchars($midLink) ?>" class="home-banner-link home-banner-link--mid">
-            <img src="<?= htmlspecialchars($midImgSrc) ?>" alt="<?= htmlspecialchars($banner_mid['alt'] ?? 'Banner') ?>" class="home-banner-img" loading="lazy">
-        </a>
     </section>
     <?php endif; ?>
 
@@ -180,25 +147,6 @@ function home_product_card($p, $base) {
                 <?php foreach (array_slice($featured, 0, 8) as $p) { home_product_card($p, $base); } ?>
             </ul>
             <p class="home-section-link"><a href="<?= $base ?>/products" class="pagination-link">Xem tất cả</a></p>
-        </div>
-    </section>
-    <?php endif; ?>
-
-    <!-- Khu vực quảng cáo (ad slots) -->
-    <?php if (!empty($ad_slots)): ?>
-    <section class="home-ads" aria-label="Quảng cáo">
-        <div class="shop-container home-ads-inner">
-            <?php foreach (array_slice($ad_slots, 0, 3) as $ad): 
-                if (empty($ad['image'])) continue;
-                $adImgSrc = home_banner_img_src($ad['image']);
-                $adLink = !empty($ad['link']) ? $ad['link'] : '#';
-            ?>
-            <div class="home-ad-slot">
-                <a href="<?= htmlspecialchars($adLink) ?>" class="home-ad-link">
-                    <img src="<?= htmlspecialchars($adImgSrc) ?>" alt="<?= htmlspecialchars($ad['alt'] ?? '') ?>" class="home-ad-img" loading="lazy">
-                </a>
-            </div>
-            <?php endforeach; ?>
         </div>
     </section>
     <?php endif; ?>

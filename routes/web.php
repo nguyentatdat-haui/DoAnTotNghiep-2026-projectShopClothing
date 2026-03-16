@@ -36,8 +36,6 @@ use App\Controllers\Admin\AuthController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\ProductController as AdminProductController;
 use App\Controllers\Admin\OrderController as AdminOrderController;
-use App\Controllers\Admin\BannerController;
-
 $router->get('/admin/login', [AuthController::class, 'loginForm']);
 $router->post('/admin/login', [AuthController::class, 'login']);
 $router->get('/admin/logout', [AuthController::class, 'logout']);
@@ -54,8 +52,12 @@ $router->get('/admin/orders', [AdminOrderController::class, 'index']);
 $router->get('/admin/orders/{id}', [AdminOrderController::class, 'show'])->where(['id' => '[0-9]+']);
 $router->post('/admin/orders/update-status/{id}', [AdminOrderController::class, 'updateStatus'])->where(['id' => '[0-9]+']);
 
-$router->get('/admin/banners', [BannerController::class, 'index']);
-$router->post('/admin/banners/save', [BannerController::class, 'save']);
+$router->get('/admin/categories', [\App\Controllers\Admin\CategoryController::class, 'index']);
+$router->get('/admin/categories/create', [\App\Controllers\Admin\CategoryController::class, 'create']);
+$router->post('/admin/categories/store', [\App\Controllers\Admin\CategoryController::class, 'store']);
+$router->get('/admin/categories/edit/{id}', [\App\Controllers\Admin\CategoryController::class, 'edit'])->where(['id' => '[0-9]+']);
+$router->post('/admin/categories/update/{id}', [\App\Controllers\Admin\CategoryController::class, 'update'])->where(['id' => '[0-9]+']);
+$router->post('/admin/categories/delete/{id}', [\App\Controllers\Admin\CategoryController::class, 'delete'])->where(['id' => '[0-9]+']);
 
 // Topic routes
 // $router->group('/topic', function ($router) {

@@ -36,6 +36,16 @@ abstract class BaseRepository
         }, $results);
     }
 
+    public function findAll()
+    {
+        return $this->getAll(true);
+    }
+
+    public function find($id)
+    {
+        return $this->findById($id);
+    }
+
     public function findById($id)
     {
         $sql = "SELECT * FROM {$this->table} WHERE id = :id";

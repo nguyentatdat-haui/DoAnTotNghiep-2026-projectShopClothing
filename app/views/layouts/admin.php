@@ -326,14 +326,14 @@ $title = $title ?? 'Quản trị';
             <a href="<?= $adminBase ?>" class="<?= (isset($current_page) && $current_page === 'dashboard') ? 'active' : '' ?>">
                 <i class="fas fa-chart-line"></i> <span>Dashboard</span>
             </a>
+            <a href="<?= $adminBase ?>/categories" class="<?= (isset($current_page) && $current_page === 'categories') ? 'active' : '' ?>">
+                <i class="fas fa-tags"></i> <span>Danh mục</span>
+            </a>
             <a href="<?= $adminBase ?>/products" class="<?= (isset($current_page) && $current_page === 'products') ? 'active' : '' ?>">
                 <i class="fas fa-gem"></i> <span>Sản phẩm</span>
             </a>
             <a href="<?= $adminBase ?>/orders" class="<?= (isset($current_page) && $current_page === 'orders') ? 'active' : '' ?>">
                 <i class="fas fa-shopping-bag"></i> <span>Đơn hàng</span>
-            </a>
-            <a href="<?= $adminBase ?>/banners" class="<?= (isset($current_page) && $current_page === 'banners') ? 'active' : '' ?>">
-                <i class="fas fa-magic"></i> <span>Banners</span>
             </a>
             
             <div class="sidebar-label" style="margin-top:20px;">Hệ thống</div>
