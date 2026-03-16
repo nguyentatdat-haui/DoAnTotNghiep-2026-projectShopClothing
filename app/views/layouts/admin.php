@@ -9,7 +9,7 @@ $title = $title ?? 'Quản trị';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($title) ?> - Premium Admin</title>
+    <title><?= htmlspecialchars($title) ?> - Nguyễn Tất Đạt-Haui-Admin</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -77,13 +77,25 @@ $title = $title ?? 'Quản trị';
         }
 
         .sidebar-label {
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #475569;
-            margin-bottom: 15px;
+            letter-spacing: 2px;
+            color: #94a3b8;
+            margin: 25px 0 15px;
             padding-left: 15px;
-            font-weight: 700;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.8;
+        }
+
+        .sidebar-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.05);
+            margin-right: 15px;
         }
 
         .admin-sidebar a { 
@@ -336,14 +348,14 @@ $title = $title ?? 'Quản trị';
                 <i class="fas fa-shopping-bag"></i> <span>Đơn hàng</span>
             </a>
             
-            <div class="sidebar-label" style="margin-top:20px;">Hệ thống</div>
+            <div class="sidebar-label">Hệ thống</div>
             <a href="<?= $base ?>" target="_blank">
                 <i class="fas fa-eye"></i> <span>Xem website</span>
             </a>
         </div>
 
         <div class="sidebar-footer">
-            <a href="<?= $adminBase ?>/logout" class="logout">
+            <a href="<?= $adminBase ?>/logout" class="logout" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?');">
                 <i class="fas fa-power-off"></i> <span>Đăng xuất</span>
             </a>
         </div>
@@ -357,7 +369,7 @@ $title = $title ?? 'Quản trị';
             <div class="user-profile">
                 <div class="user-info">
                     <span class="user-name"><?= htmlspecialchars($_SESSION['admin_email'] ?? 'Administrator') ?></span>
-                    <span class="user-role">Quản trị viên chuyên nghiệp</span>
+                    <span class="user-role">Nguyễn Tất Đạt-Haui-Admin</span>
                 </div>
                 <div class="avatar">AD</div>
             </div>

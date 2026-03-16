@@ -4,7 +4,7 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <a href="<?= $base ?>" class="footer-logo-link">
-                    <img src="<?= asset('images/logo.png') ?>" alt="<?= htmlspecialchars(env('SITENAME') ?: 'Clothing Shop') ?>" class="footer-logo">
+                    <span class="footer-logo-text">CLOTHING SHOP</span>
                 </a>
                 <p class="footer-tagline">Tinh hoa thời trang hiện đại. Khám phá phong cách và định hình cá tính riêng của bạn cùng những bộ sưu tập đẳng cấp nhất.</p>
                 
