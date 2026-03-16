@@ -49,9 +49,9 @@ $hasDiscount = $originPrice > 0 && $price < $originPrice;
                 <h1 class="product-detail-name"><?= htmlspecialchars($product->name ?? '') ?></h1>
                 <div class="product-detail-price">
                     <?php if ($hasDiscount): ?>
-                        <span class="price-old"><?= number_format($originPrice, 0, ',', '.') ?></span>
+                        <span class="price-old"><?= number_format($originPrice, 0, ',', '.') ?>đ</span>
                     <?php endif; ?>
-                    <span class="price-current"><?= number_format($price, 0, ',', '.') ?></span>
+                    <span class="price-current"><?= number_format($price, 0, ',', '.') ?>đ</span>
                 </div>
                 <?php if (!empty($product->description)): ?>
                 <div class="product-detail-description">
@@ -78,7 +78,7 @@ $hasDiscount = $originPrice > 0 && $price < $originPrice;
                             ?>
                             <li class="variant-item">
                                 <button type="button" class="variant-btn" data-variant-id="<?= $vid ?>" data-price="<?= $vPrice ?>" data-sku="<?= htmlspecialchars($v->sku ?? '') ?>" <?= ($stock !== null && $stock < 1) ? 'disabled' : '' ?>>
-                                    <?= htmlspecialchars($label) ?> — <?= number_format($vPrice, 0, ',', '.') ?>
+                                    <?= htmlspecialchars($label) ?> — <?= number_format($vPrice, 0, ',', '.') ?>đ
                                     <?php if ($stock !== null && $stock < 1): ?> (Hết hàng)<?php endif; ?>
                                 </button>
                             </li>

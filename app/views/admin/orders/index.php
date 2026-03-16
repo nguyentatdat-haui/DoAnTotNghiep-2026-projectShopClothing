@@ -15,8 +15,8 @@ $total_pages = $pagination['total_pages'] ?? 1;
                 <th>Khách hàng</th>
                 <th>Tổng tiền</th>
                 <th>Trạng thái</th>
-                <th>Ngay</th>
-                <th>Thao tac</th>
+                <th>Ngày</th>
+                <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -31,8 +31,8 @@ $total_pages = $pagination['total_pages'] ?? 1;
             <tr>
                 <td>#<?= (int)$id ?></td>
                 <td><?= htmlspecialchars($userName ?: $userEmail ?: '—') ?></td>
-                <td><?= number_format((float)$totalAmount, 0, ',', '.') ?></td>
-                <td><?= htmlspecialchars($status) ?></td>
+                <td><?= number_format((float)$totalAmount, 0, ',', '.') ?>đ</td>
+                <td><span class="status-badge <?= htmlspecialchars($status) ?>"><?= htmlspecialchars($status) ?></span></td>
                 <td><?= htmlspecialchars($created) ?></td>
                 <td><a href="<?= $adminBase ?>/orders/<?= (int)$id ?>" class="btn btn-primary btn-sm">Chi tiết</a></td>
             </tr>

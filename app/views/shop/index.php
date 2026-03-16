@@ -43,9 +43,9 @@ $pageTitle = $searchQuery !== '' ? 'Tìm kiếm: ' . htmlspecialchars($searchQue
                             <h3 class="product-name"><?= htmlspecialchars($p->name ?? '') ?></h3>
                             <div class="product-price">
                                 <?php if ($hasDiscount): ?>
-                                    <span class="price-old"><?= number_format($originPrice, 0, ',', '.') ?></span>
+                                    <span class="price-old"><?= number_format($originPrice, 0, ',', '.') ?>đ</span>
                                 <?php endif; ?>
-                                <span class="price-current"><?= number_format($price, 0, ',', '.') ?></span>
+                                <span class="price-current"><?= number_format($price, 0, ',', '.') ?>đ</span>
                             </div>
                         </div>
                     </a>

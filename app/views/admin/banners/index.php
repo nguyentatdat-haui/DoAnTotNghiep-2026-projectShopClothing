@@ -29,7 +29,7 @@ $banners = $banners ?? [];
                 <input type="text" name="link_url[<?= htmlspecialchars($slug) ?>]" value="<?= htmlspecialchars($b['link_url']) ?>" placeholder="https://... hoặc /products">
             </div>
             <div class="form-group">
-                <label>Alt text</label>
+                <label>Mô tả hình ảnh (Alt text)</label>
                 <input type="text" name="alt_text[<?= htmlspecialchars($slug) ?>]" value="<?= htmlspecialchars($b['alt_text']) ?>" placeholder="Mô tả ảnh">
             </div>
         </div>

@@ -36,9 +36,9 @@ function home_product_card($p, $base) {
                 <h3 class="product-name"><?= htmlspecialchars($name) ?></h3>
                 <div class="product-price">
                     <?php if ($hasDiscount): ?>
-                    <span class="price-old"><?= number_format($basePrice, 0, ',', '.') ?></span>
+                    <span class="price-old"><?= number_format($basePrice, 0, ',', '.') ?>đ</span>
                     <?php endif; ?>
-                    <span class="price-current"><?= number_format($price, 0, ',', '.') ?></span>
+                    <span class="price-current"><?= number_format($price, 0, ',', '.') ?>đ</span>
                 </div>
             </div>
         </a>
@@ -314,15 +314,42 @@ function home_product_card($p, $base) {
 .home-section--alt{background:#fafafa;}
 .home-section-title{margin:0 0 8px;font-size:1.75rem;}
 .home-section-desc{margin:0 0 24px;color:#666;font-size:1rem;}
-.home-section-link{text-align:center;margin-top:1.5rem;}
-.product-grid--home{margin-bottom:0;}
+.home-section-link { text-align: center; margin-top: 3rem; }
+.home-section-link .pagination-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 35px;
+    background: #fff;
+    color: #1a1a1a;
+    border: 2px solid #1a1a1a;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+}
+.home-section-link .pagination-link:hover {
+    background: #1a1a1a;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.home-section-link .pagination-link::after {
+    content: '\f061';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 12px;
+}
 .product-image--placeholder{background:#e0e0e0;}
 .product-image-wrap{position:relative;}
 .product-badge--sale{top:auto;left:auto;bottom:8px;right:8px;width:auto;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;border-radius:4px;background:#0d9488;color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15);}
 .product-badge--sale::before{display:none;}
 .product-info .product-price{margin-top:6px;}
 .product-info .price-old{text-decoration:line-through;color:#888;font-size:0.9em;margin-right:8px;}
-.product-info .price-current{font-weight:600;color:#1a1a1a;}
+.product-info .price-current{font-weight:700;color:#e11d48;}
 /* Banners */
 .home-banner{width:100vw;max-width:100vw;margin-left:calc(-50vw + 50%);padding:0;overflow:hidden;box-sizing:border-box;}
 .home-banner--main{}

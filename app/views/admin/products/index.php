@@ -17,7 +17,7 @@ $total_pages = $pagination['total_pages'] ?? 1;
                 <th>ID</th>
                 <th>Ảnh</th>
                 <th>Tên</th>
-                <th>Gia</th>
+                <th>Giá</th>
                 <th>Trạng thái</th>
                 <th>Thao tác</th>
             </tr>
@@ -35,8 +35,8 @@ $total_pages = $pagination['total_pages'] ?? 1;
                 <td><?= (int)$id ?></td>
                 <td><?php if ($imgSrc): ?><img src="<?= htmlspecialchars($imgSrc) ?>" alt="" style="width:50px;height:50px;object-fit:cover;"><?php else: ?>—<?php endif; ?></td>
                 <td><?= htmlspecialchars($name) ?></td>
-                <td><?= number_format((float)$basePrice, 0, ',', '.') ?></td>
-                <td><?= htmlspecialchars($status) ?></td>
+                <td><?= number_format((float)$basePrice, 0, ',', '.') ?>đ</td>
+                <td><span class="status-badge <?= htmlspecialchars($status) ?>"><?= htmlspecialchars($status) ?></span></td>
                 <td>
                     <a href="<?= $adminBase ?>/products/edit/<?= (int)$id ?>" class="btn btn-secondary btn-sm">Sửa</a>
                     <form method="post" action="<?= $adminBase ?>/products/delete/<?= (int)$id ?>" style="display:inline;" onsubmit="return confirm('Xóa sản phẩm này?');">
@@ -52,7 +52,7 @@ $total_pages = $pagination['total_pages'] ?? 1;
     <?php endif; ?>
     <?php if ($total_pages > 1): ?>
         <p style="margin-top:16px;">
-            Trang <?= $current_page ?> / <?= $total_pages ?> (<?= $total ?> san pham)
+            Trang <?= $current_page ?> / <?= $total_pages ?> (<?= $total ?> sản phẩm)
             <?php if ($current_page > 1): ?><a href="<?= $adminBase ?>/products?page=<?= $current_page - 1 ?>">Trước</a><?php endif; ?>
             <?php if ($current_page < $total_pages): ?><a href="<?= $adminBase ?>/products?page=<?= $current_page + 1 ?>">Sau</a><?php endif; ?>
         </p>
