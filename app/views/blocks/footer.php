@@ -22,7 +22,7 @@
                     <li><a href="<?= $base ?>/products">Hàng mới về</a></li>
                     <li><a href="<?= $base ?>/products">Sản phẩm bán chạy</a></li>
                     <li><a href="<?= $base ?>/sale">Bộ sưu tập Mùa hè</a></li>
-                    <li><a href="<?= $base ?>/sale">Giảm giá & Khuyến mãi</a></li>
+                    <li><a href="<?= $base ?>/sale">Sản phẩm Sale</a></li>
                 </ul>
             </div>
             

@@ -22,14 +22,17 @@ $headerCategories = $categories ?? [];
         display: flex !important;
         align-items: center !important;
     }
-    .logo {
-        height: 75px !important; /* Professional height */
-        width: auto !important;
-        mix-blend-mode: multiply !important;
-        transition: transform 0.3s ease !important;
+    .logo-text {
+        font-family: 'Outfit', sans-serif !important;
+        font-size: 24px !important;
+        font-weight: 800 !important;
+        color: #d4af37 !important;
+        letter-spacing: -0.5px !important;
+        text-transform: uppercase !important;
         display: block !important;
+        transition: transform 0.3s ease !important;
     }
-    .logo:hover {
+    .logo-text:hover {
         transform: scale(1.05) !important;
     }
     .header-nav {
@@ -115,8 +118,8 @@ $headerCategories = $categories ?? [];
     <div class="header-top">
         <div class="header-container">
             <div class="header-logo">
-                <a href="<?= base_url() ?>">
-                    <img src="<?= asset('images/logo.png') ?>" alt="Clothing Shop" class="logo">
+                <a href="<?= base_url() ?>" style="text-decoration: none !important;">
+                    <span class="logo-text">CLOTHING SHOP</span>
                 </a>
             </div>
             <nav class="header-nav">
@@ -146,7 +149,7 @@ $headerCategories = $categories ?? [];
                             <?php endif; ?>
                         </div>
                     </li>
-                    <li><a href="<?= base_url() ?>/sale">KHUYẾN MÃI</a></li>
+                    <li><a href="<?= base_url() ?>/sale">SẢN PHẨM SALE</a></li>
                 </ul>
             </nav>
             <div class="header-icons">
