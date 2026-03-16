@@ -144,21 +144,6 @@ CREATE TABLE IF NOT EXISTS `order_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
--- Table structure for site_banners
--- ----------------------------
-CREATE TABLE IF NOT EXISTS `site_banners` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `slug` varchar(50) NOT NULL,
-  `image_url` varchar(500) DEFAULT NULL,
-  `link_url` varchar(500) DEFAULT NULL,
-  `alt_text` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
 -- Seed Data
 -- ----------------------------
 
