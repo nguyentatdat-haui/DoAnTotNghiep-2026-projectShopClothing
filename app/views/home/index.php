@@ -47,13 +47,79 @@ function home_product_card($p, $base) {
 }
 ?>
 <div class="home-page">
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1>Chào mừng bạn đến với cửa hàng</h1>
-            <p>Khám phá sản phẩm mới nhất và ưu đãi đặc biệt.</p>
-            <a href="<?= $base ?>/products" class="btn-hero">Xem sản phẩm</a>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <section class="hero-slider swiper">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+                <img src="<?= asset('images/banners/banner1.png') ?>" alt="Summer Collection">
+                <div class="hero-overlay">
+                    <div class="hero-text">
+                        <span class="hero-subtitle">Mùa hè 2026</span>
+                        <h1>Summer Collection</h1>
+                        <p>Khám phá phong cách mới đầy phóng khoáng và tinh tế.</p>
+                        <a href="<?= $base ?>/products" class="btn-hero">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+                <img src="<?= asset('images/banners/banner2.png') ?>" alt="Office Luxury">
+                <div class="hero-overlay">
+                    <div class="hero-text">
+                        <span class="hero-subtitle">Nỗ lực vươn xa</span>
+                        <h1>Office Luxury</h1>
+                        <p>Đẳng cấp trong từng đường may dành cho quý ông hiện đại.</p>
+                        <a href="<?= $base ?>/products" class="btn-hero">Xem bộ sưu tập</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+                <img src="<?= asset('images/banners/banner3.png') ?>" alt="Streetwear Vibe">
+                <div class="hero-overlay">
+                    <div class="hero-text">
+                        <span class="hero-subtitle">Cá tính & Phá cách</span>
+                        <h1>Streetwear Vibe</h1>
+                        <p>Khẳng định cái tôi với phong cách đường phố năng động.</p>
+                        <a href="<?= $base ?>/products" class="btn-hero">Khám phá ngay</a>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- Swiper Controls -->
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </section>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const swiper = new Swiper('.hero-slider', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                }
+            });
+        });
+    </script>
 
     <!-- Main banner (full-width) -->
     <?php if (!empty($banner_main['image'])): 
@@ -146,10 +212,104 @@ function home_product_card($p, $base) {
     </section>
 </div>
 <style>
-.hero-section{text-align:center;padding:60px 20px;background:linear-gradient(135deg,#f8f6f0 0%,#eee 100%);}
-.hero-content h1{margin:0 0 12px;font-size:2rem;}
-.btn-hero{display:inline-block;padding:12px 28px;background:#1a1a1a;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;margin-top:16px;}
-.btn-hero:hover{background:#d4af37;color:#1a1a1a;}
+/* Hero Slider Styles - Adjusted for Landscape Look */
+.hero-slider {
+    width: 100%;
+    height: 500px; /* Fixed height for professional landscape look */
+    overflow: hidden;
+}
+.hero-slider .swiper-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.hero-slider .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%; /* Puts focus on the upper part of the image */
+}
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.2));
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+}
+.hero-text {
+    color: #fff;
+    max-width: 600px;
+    animation: fadeInUp 0.8s ease-out;
+}
+.hero-subtitle {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #d4af37;
+    margin-bottom: 15px;
+}
+.hero-text h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    color: #fff;
+}
+.hero-text p {
+    font-size: 1.2rem;
+    margin-bottom: 35px;
+    color: rgba(255,255,255,0.9);
+}
+.btn-hero {
+    display: inline-block;
+    padding: 16px 40px;
+    background: #d4af37;
+    color: #111;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+.btn-hero:hover {
+    background: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Swiper Controls Customization */
+.swiper-button-next, .swiper-button-prev {
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 50%;
+}
+.swiper-button-next:after, .swiper-button-prev:after {
+    font-size: 20px;
+}
+.swiper-pagination-bullet-active {
+    background: #d4af37;
+}
+
+@media (max-width: 768px) {
+    .hero-slider { height: 50vh; }
+    .hero-text h1 { font-size: 2.5rem; }
+    .hero-overlay { padding: 0 5%; }
+}
 .home-section{padding:48px 20px;}
 .home-section--alt{background:#fafafa;}
 .home-section-title{margin:0 0 8px;font-size:1.75rem;}
@@ -180,9 +340,42 @@ function home_product_card($p, $base) {
 .home-ad-link:hover{opacity:.95;}
 .home-ad-img{width:100%;height:auto;display:block;object-fit:cover;min-height:100px;}
 @media (max-width:768px){.home-ads-inner{grid-template-columns:1fr;gap:16px;}.home-ad-img{min-height:80px;}}
-.home-cta{text-align:center;padding:56px 20px;background:linear-gradient(135deg,#1a1a1a 0%,#333 100%);color:#fff;}
-.home-cta-title{margin:0 0 8px;font-size:1.5rem;color:#fff;}
-.home-cta-desc{margin:0 0 20px;color:rgba(255,255,255,0.85);}
-.home-cta .btn-hero{background:#fff;color:#1a1a1a;}
-.home-cta .btn-hero:hover{background:#d4af37;color:#1a1a1a;}
+.home-cta {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fdfbf7;
+    color: #111;
+    border-top: 1px solid #eaeaea;
+}
+.home-cta-title {
+    margin: 0 0 15px;
+    font-size: 2.8rem;
+    color: #111;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+.home-cta-desc {
+    margin: 0 auto 35px;
+    color: #666;
+    font-size: 1.15rem;
+    max-width: 550px;
+    line-height: 1.6;
+}
+.home-cta .btn-hero {
+    background: #111;
+    color: #fff;
+    padding: 16px 45px;
+    font-size: 14px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+.home-cta .btn-hero:hover {
+    background: #d4af37;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+}
 </style>
