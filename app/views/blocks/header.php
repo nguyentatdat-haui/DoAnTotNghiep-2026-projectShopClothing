@@ -11,10 +11,10 @@ $headerCategories = $categories ?? [];
             </div>
             <nav class="header-nav">
                 <ul>
-                    <li><a href="<?= base_url() ?>">HOME</a></li>
-                    <li><a href="<?= base_url() ?>/company">ABOUT</a></li>
+                    <li><a href="<?= base_url() ?>">TRANG CHỦ</a></li>
+                    <li><a href="<?= base_url() ?>/company">GIỚI THIỆU</a></li>
                     <li class="dropdown">
-                        <a href="<?= base_url() ?>/products">PRODUCTS <i class="fas fa-chevron-down"></i></a>
+                        <a href="<?= base_url() ?>/products">SẢN PHẨM <i class="fas fa-chevron-down"></i></a>
                         <div class="dropdown-menu">
                             <?php if (!empty($headerCategories)): ?>
                                 <?php foreach ($headerCategories as $cat): ?>
@@ -36,17 +36,17 @@ $headerCategories = $categories ?? [];
                             <?php endif; ?>
                         </div>
                     </li>
-                    <li><a href="<?= base_url() ?>/sale">SALE</a></li>
+                    <li><a href="<?= base_url() ?>/sale">KHUYẾN MÃI</a></li>
                 </ul>
             </nav>
             <div class="header-icons">
                 <div class="header-search-wrap">
                     <form action="<?= rtrim(base_url(), '/') ?>/products" method="get" class="header-search-form" role="search">
-                        <input type="search" name="q" class="header-search-input" placeholder="Search products..." value="<?= isset($_GET['q']) ? htmlspecialchars($_GET['q']) : '' ?>" aria-label="Search products">
-                        <button type="submit" class="header-search-btn" title="Search"><i class="fas fa-search"></i></button>
+                        <input type="search" name="q" class="header-search-input" placeholder="Tìm kiếm sản phẩm..." value="<?= isset($_GET['q']) ? htmlspecialchars($_GET['q']) : '' ?>" aria-label="Tìm kiếm sản phẩm">
+                        <button type="submit" class="header-search-btn" title="Tìm kiếm"><i class="fas fa-search"></i></button>
                     </form>
                 </div>
-                <a href="<?= base_url() ?>/cart" class="icon-link cart-icon" title="Cart" aria-label="Cart (<?= (int)($cart_count ?? 0) ?> items)">
+                <a href="<?= base_url() ?>/cart" class="icon-link cart-icon" title="Giỏ hàng" aria-label="Giỏ hàng (<?= (int)($cart_count ?? 0) ?> sản phẩm)">
                     <span class="cart-icon-wrap"><i class="fas fa-shopping-bag"></i></span>
                     <span class="cart-count"><?= (int)($cart_count ?? 0) ?></span>
                 </a>

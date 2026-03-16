@@ -1,7 +1,7 @@
 <div class="about-hero">
     <div class="about-hero-content">
-        <h1>Our Story</h1>
-        <p>Elevating your style with curated pieces that blend tradition with modern fashion.</p>
+        <h1>Câu chuyện của chúng tôi</h1>
+        <p>Nâng tầm phong cách với những thiết kế chọn lọc, hoà quyện giữa truyền thống và hiện đại.</p>
     </div>
 </div>
 
@@ -9,14 +9,14 @@
     <div class="container">
         <div class="about-grid">
             <div class="about-image">
-                <img src="<?= asset('images/about-store.webp') ?>" alt="Our Showroom">
+                <img src="<?= asset('images/about-store.webp') ?>" alt="Showroom của chúng tôi">
             </div>
             <div class="about-text">
-                <span class="section-tag">Since 2026</span>
-                <h2>Redefining Fashion for the Modern Era</h2>
-                <p>Marni Store was founded with a single vision: to make high-quality, stylish clothing accessible to everyone who values elegance and comfort. What started as a small boutique has grown into a destination for fashion enthusiasts.</p>
-                <p>We believe that fashion is a form of self-expression. Each piece in our collection is carefully selected to ensure it meets our standards of quality, durability, and most importantly, style.</p>
-                <p>Our commitment to sustainability and ethical production ensures that you can feel as good as you look in our clothing.</p>
+                <span class="section-tag">Từ năm 2026</span>
+                <h2>Định nghĩa lại thời trang cho kỷ nguyên hiện đại</h2>
+                <p>Marni Store được thành lập với một tầm nhìn: mang quần áo chất lượng cao, thời thượng đến với tất cả những ai yêu sự tinh tế và thoải mái. Từ một boutique nhỏ, chúng tôi đã trở thành điểm đến của những người yêu thời trang.</p>
+                <p>Chúng tôi tin thời trang là cách thể hiện bản thân. Mỗi sản phẩm trong bộ sưu tập đều được chọn lựa kỹ lưỡng để đảm bảo tiêu chuẩn về chất lượng, độ bền và quan trọng nhất là phong cách.</p>
+                <p>Cam kết về phát triển bền vững và sản xuất có trách nhiệm giúp bạn tự tin “đẹp” từ bên trong lẫn bên ngoài.</p>
             </div>
         </div>
     </div>
@@ -24,23 +24,23 @@
 
 <section class="about-section" style="background-color: #fcfcfc;">
     <div class="container text-center">
-        <span class="section-tag">Our Values</span>
-        <h2 style="font-size: 2.5rem; margin-bottom: 50px;">What Drives Us</h2>
+        <span class="section-tag">Giá trị cốt lõi</span>
+        <h2 style="font-size: 2.5rem; margin-bottom: 50px;">Điều tạo nên chúng tôi</h2>
         <div class="values-grid">
             <div class="value-card">
                 <i class="fas fa-heart"></i>
-                <h3>Quality First</h3>
-                <p>We never compromise on materials. Every fabric choice is made with longevity in mind.</p>
+                <h3>Chất lượng hàng đầu</h3>
+                <p>Không thoả hiệp về chất liệu. Mỗi lựa chọn vải đều hướng đến độ bền lâu dài.</p>
             </div>
             <div class="value-card">
                 <i class="fas fa-leaf"></i>
-                <h3>Sustainability</h3>
-                <p>Committed to reducing our environmental footprint through conscious choices.</p>
+                <h3>Bền vững</h3>
+                <p>Giảm tác động môi trường bằng những lựa chọn có ý thức.</p>
             </div>
             <div class="value-card">
                 <i class="fas fa-users"></i>
-                <h3>Community</h3>
-                <p>We listen to our customers and grow with them, building a fashion community for all.</p>
+                <h3>Cộng đồng</h3>
+                <p>Lắng nghe khách hàng và cùng phát triển, xây dựng cộng đồng thời trang cho mọi người.</p>
             </div>
         </div>
     </div>
@@ -51,19 +51,19 @@
         <div class="stats-grid">
             <div class="stat-item">
                 <h4>50k+</h4>
-                <p>Happy Customers</p>
+                <p>Khách hàng hài lòng</p>
             </div>
             <div class="stat-item">
                 <h4>15+</h4>
-                <p>Boutique Outlets</p>
+                <p>Cửa hàng</p>
             </div>
             <div class="stat-item">
                 <h4>200+</h4>
-                <p>Unique Designs</p>
+                <p>Thiết kế độc đáo</p>
             </div>
             <div class="stat-item">
                 <h4>100%</h4>
-                <p>Organic Materials</p>
+                <p>Chất liệu thân thiện</p>
             </div>
         </div>
     </div>
@@ -71,9 +71,9 @@
 
 <section class="about-section">
     <div class="container text-center">
-        <h2 style="font-size: 2.2rem; margin-bottom: 20px;">Ready to Explore?</h2>
-        <p style="color: #666; max-width: 700px; margin: 0 auto 30px;">Discover our latest collection and find the perfect outfit for any occasion.</p>
-        <a href="<?= base_url() ?>/products" class="view-products-btn" style="display: inline-block; padding: 15px 40px; background: #1a1a1a; color: #fff; text-decoration: none; border-radius: 4px; font-weight: 600; transition: background 0.3s;">Shop the Collection</a>
+        <h2 style="font-size: 2.2rem; margin-bottom: 20px;">Sẵn sàng khám phá?</h2>
+        <p style="color: #666; max-width: 700px; margin: 0 auto 30px;">Khám phá bộ sưu tập mới nhất và tìm outfit phù hợp cho mọi dịp.</p>
+        <a href="<?= base_url() ?>/products" class="view-products-btn" style="display: inline-block; padding: 15px 40px; background: #1a1a1a; color: #fff; text-decoration: none; border-radius: 4px; font-weight: 600; transition: background 0.3s;">Xem bộ sưu tập</a>
     </div>
 </section>
 

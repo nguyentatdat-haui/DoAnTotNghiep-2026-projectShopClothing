@@ -1,7 +1,7 @@
 <?php
 $product = $product ?? null;
 if (!$product) {
-    echo '<p>Product not found.</p>';
+    echo '<p>Không tìm thấy sản phẩm.</p>';
     return;
 }
 $base = rtrim(base_url(), '/');
@@ -65,11 +65,11 @@ $hasDiscount = $originPrice > 0 && $price < $originPrice;
                     <input type="hidden" name="product_id" value="<?= (int)($product->id ?? 0) ?>">
                     <input type="hidden" name="product_variant_id" id="product_variant_id" value="">
                     <div class="product-options">
-                        <p class="option-label">Select variant (color / size) <span class="required">*</span></p>
+                        <p class="option-label">Chọn biến thể (màu / size) <span class="required">*</span></p>
                         <ul class="variant-list">
                             <?php foreach ($variants as $v): 
                                 $v = is_array($v) ? (object)$v : $v;
-                                $colorName = $v->color_name ?? 'Color';
+                                $colorName = $v->color_name ?? 'Màu';
                                 $sizeName = $v->size_name ?? '';
                                 $label = trim($colorName . ($sizeName ? ' / ' . $sizeName : ''));
                                 $vPrice = isset($v->price) ? (float)$v->price : $price;
@@ -79,16 +79,16 @@ $hasDiscount = $originPrice > 0 && $price < $originPrice;
                             <li class="variant-item">
                                 <button type="button" class="variant-btn" data-variant-id="<?= $vid ?>" data-price="<?= $vPrice ?>" data-sku="<?= htmlspecialchars($v->sku ?? '') ?>" <?= ($stock !== null && $stock < 1) ? 'disabled' : '' ?>>
                                     <?= htmlspecialchars($label) ?> — <?= number_format($vPrice, 0, ',', '.') ?>
-                                    <?php if ($stock !== null && $stock < 1): ?> (Out of stock)<?php endif; ?>
+                                    <?php if ($stock !== null && $stock < 1): ?> (Hết hàng)<?php endif; ?>
                                 </button>
                             </li>
                             <?php endforeach; ?>
                         </ul>
-                        <p class="variant-required-msg" id="variant-required-msg">Please select a variant above.</p>
+                        <p class="variant-required-msg" id="variant-required-msg">Vui lòng chọn 1 biến thể bên trên.</p>
                     </div>
                     <div class="product-actions">
-                        <label>Quantity: <input type="number" name="quantity" class="product-qty" value="1" min="1" max="99"></label>
-                        <button type="submit" class="btn-add-cart" id="btn-add-cart" disabled>Add to cart</button>
+                        <label>Số lượng: <input type="number" name="quantity" class="product-qty" value="1" min="1" max="99"></label>
+                        <button type="submit" class="btn-add-cart" id="btn-add-cart" disabled>Thêm vào giỏ</button>
                     </div>
                 </form>
                 <?php endif; ?>

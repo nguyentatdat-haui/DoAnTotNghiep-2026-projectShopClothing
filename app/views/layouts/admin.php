@@ -2,14 +2,14 @@
 $base = rtrim(base_url(), '/');
 $adminBase = $base . '/admin';
 $showSidebar = isset($show_sidebar) ? $show_sidebar : true;
-$title = $title ?? 'Admin';
+$title = $title ?? 'Quản trị';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($title) ?> - Admin</title>
+    <title><?= htmlspecialchars($title) ?> - Quản trị</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { box-sizing: border-box; }
@@ -80,8 +80,8 @@ $title = $title ?? 'Admin';
 <div class="admin-wrap">
     <?php if ($showSidebar): ?>
     <aside class="admin-sidebar">
-        <div class="brand"><i class="fas fa-cog"></i> Admin</div>
-        <a href="<?= $adminBase ?>" class="<?= (isset($current_page) && $current_page === 'dashboard') ? 'active' : '' ?>"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <div class="brand"><i class="fas fa-cog"></i> Quản trị</div>
+        <a href="<?= $adminBase ?>" class="<?= (isset($current_page) && $current_page === 'dashboard') ? 'active' : '' ?>"><i class="fas fa-tachometer-alt"></i> Bảng điều khiển</a>
         <a href="<?= $adminBase ?>/products" class="<?= (isset($current_page) && $current_page === 'products') ? 'active' : '' ?>"><i class="fas fa-box"></i> Sản phẩm</a>
         <a href="<?= $adminBase ?>/orders" class="<?= (isset($current_page) && $current_page === 'orders') ? 'active' : '' ?>"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
         <a href="<?= $adminBase ?>/banners" class="<?= (isset($current_page) && $current_page === 'banners') ? 'active' : '' ?>"><i class="fas fa-image"></i> Banner</a>
@@ -98,7 +98,9 @@ $title = $title ?? 'Admin';
         <?php endif; ?>
         <main class="admin-content">
             <?php
-            if (isset($_SESSION['flash']['message'])) {
+            // Chỉ hiển thị flash message trong layout khi có sidebar
+            // (tránh lệch layout ở màn hình đăng nhập full-page).
+            if (!empty($showSidebar) && isset($_SESSION['flash']['message'])) {
                 $msg = $_SESSION['flash']['message'];
                 $type = $_SESSION['flash']['message_type'] ?? 'info';
                 unset($_SESSION['flash']['message'], $_SESSION['flash']['message_type']);
@@ -133,7 +135,7 @@ $title = $title ?? 'Admin';
                 if (!files || files.length === 0) return;
                 var label = document.createElement('span');
                 label.className = 'upload-preview-label';
-                label.textContent = 'Preview trước khi lưu:';
+                label.textContent = 'Xem trước trước khi lưu:';
                 container.appendChild(label);
                 for (var i = 0; i < files.length; i++) {
                     if (!files[i].type || files[i].type.indexOf('image/') !== 0) continue;
@@ -141,7 +143,7 @@ $title = $title ?? 'Admin';
                     oldUrls.push(url);
                     var img = document.createElement('img');
                     img.src = url;
-                    img.alt = 'Preview';
+                    img.alt = 'Xem trước';
                     container.appendChild(img);
                 }
             });

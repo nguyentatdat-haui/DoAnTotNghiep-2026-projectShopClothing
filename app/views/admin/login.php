@@ -38,8 +38,17 @@ $adminBase = $base . '/admin';
         <div class="login-logo">
             <img src="<?= $base ?>/images/logo.png" alt="Logo">
         </div>
-        <h2>Đăng nhập Hệ thống</h2>
-        <p>Vui lòng nhập thông tin của bạn</p>
+
+        <?php if (isset($_SESSION['flash']['message'])): ?>
+            <?php
+            $msg = $_SESSION['flash']['message'];
+            $type = $_SESSION['flash']['message_type'] ?? 'info';
+            unset($_SESSION['flash']['message'], $_SESSION['flash']['message_type']);
+            ?>
+            <div class="flash-admin <?= htmlspecialchars($type) ?>">
+                <?= htmlspecialchars($msg) ?>
+            </div>
+        <?php endif; ?>
         
         <form method="post" action="<?= $adminBase ?>/login">
             <div class="form-group">

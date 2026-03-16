@@ -6,15 +6,15 @@ $base = rtrim(base_url(), '/');
 <div class="checkout-success-page">
     <div class="shop-container">
         <div class="success-box">
-            <h1>Thank you for your order</h1>
-            <p class="success-message">Your order has been placed successfully.</p>
+            <h1>Cảm ơn bạn đã đặt hàng</h1>
+            <p class="success-message">Đơn hàng của bạn đã được tạo thành công.</p>
             <?php if ($orderId): ?>
-                <p class="success-order-id">Order number: <strong>#<?= (int) $orderId ?></strong></p>
+                <p class="success-order-id">Mã đơn hàng: <strong>#<?= (int) $orderId ?></strong></p>
             <?php endif; ?>
-            <p>We will contact you shortly to confirm delivery.</p>
+            <p>Chúng tôi sẽ liên hệ sớm để xác nhận giao hàng.</p>
             <p class="success-actions">
-                <a href="<?= $base ?>/products" class="pagination-link">Continue shopping</a>
-                <a href="<?= $base ?>" class="pagination-link">Back to home</a>
+                <a href="<?= $base ?>/products" class="pagination-link">Tiếp tục mua sắm</a>
+                <a href="<?= $base ?>" class="pagination-link">Về trang chủ</a>
             </p>
         </div>
     </div>

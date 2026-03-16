@@ -30,7 +30,7 @@ function home_product_card($p, $base) {
         <a href="<?= $link ?>" class="product-link">
             <div class="product-image-wrap">
                 <?php if ($imgSrc): ?><img src="<?= htmlspecialchars($imgSrc) ?>" alt="<?= htmlspecialchars($name) ?>" class="product-image" loading="lazy"><?php else: ?><div class="product-image product-image--placeholder"></div><?php endif; ?>
-                <?php if ($hasDiscount): ?><span class="product-badge product-badge--sale sale">Sale</span><?php endif; ?>
+                <?php if ($hasDiscount): ?><span class="product-badge product-badge--sale sale">Giảm giá</span><?php endif; ?>
             </div>
             <div class="product-info">
                 <h3 class="product-name"><?= htmlspecialchars($name) ?></h3>
@@ -49,9 +49,9 @@ function home_product_card($p, $base) {
 <div class="home-page">
     <section class="hero-section">
         <div class="hero-content">
-            <h1>Welcome to our store</h1>
-            <p>Discover the latest products and special offers.</p>
-            <a href="<?= $base ?>/products" class="btn-hero">View products</a>
+            <h1>Chào mừng bạn đến với cửa hàng</h1>
+            <p>Khám phá sản phẩm mới nhất và ưu đãi đặc biệt.</p>
+            <a href="<?= $base ?>/products" class="btn-hero">Xem sản phẩm</a>
         </div>
     </section>
 
@@ -70,12 +70,12 @@ function home_product_card($p, $base) {
     <?php if (!empty($newArrivals)): ?>
     <section class="home-section home-section--alt">
         <div class="shop-container">
-            <h2 class="home-section-title">New arrivals</h2>
-            <p class="home-section-desc">Just landed — fresh picks for you.</p>
+            <h2 class="home-section-title">Hàng mới về</h2>
+            <p class="home-section-desc">Vừa lên kệ — lựa chọn mới dành cho bạn.</p>
             <ul class="product-grid product-grid--home">
                 <?php foreach ($newArrivals as $p) { home_product_card($p, $base); } ?>
             </ul>
-            <p class="home-section-link"><a href="<?= $base ?>/products" class="pagination-link">View all new arrivals</a></p>
+            <p class="home-section-link"><a href="<?= $base ?>/products" class="pagination-link">Xem tất cả sản phẩm mới</a></p>
         </div>
     </section>
     <?php endif; ?>
@@ -95,12 +95,12 @@ function home_product_card($p, $base) {
     <?php if (!empty($bestSellers)): ?>
     <section class="home-section">
         <div class="shop-container">
-            <h2 class="home-section-title">Best sellers</h2>
-            <p class="home-section-desc">Customer favorites — top picks this season.</p>
+            <h2 class="home-section-title">Bán chạy</h2>
+            <p class="home-section-desc">Được yêu thích nhất — nổi bật trong mùa này.</p>
             <ul class="product-grid product-grid--home">
                 <?php foreach ($bestSellers as $p) { home_product_card($p, $base); } ?>
             </ul>
-            <p class="home-section-link"><a href="<?= $base ?>/products" class="pagination-link">View all best sellers</a></p>
+            <p class="home-section-link"><a href="<?= $base ?>/products" class="pagination-link">Xem tất cả sản phẩm bán chạy</a></p>
         </div>
     </section>
     <?php endif; ?>
@@ -108,12 +108,12 @@ function home_product_card($p, $base) {
     <?php if (!empty($featured)): ?>
     <section class="home-section home-section--alt">
         <div class="shop-container">
-            <h2 class="home-section-title">Featured products</h2>
-            <p class="home-section-desc">Handpicked highlights from our collection.</p>
+            <h2 class="home-section-title">Sản phẩm nổi bật</h2>
+            <p class="home-section-desc">Gợi ý chọn lọc từ bộ sưu tập của chúng tôi.</p>
             <ul class="product-grid product-grid--home">
                 <?php foreach (array_slice($featured, 0, 8) as $p) { home_product_card($p, $base); } ?>
             </ul>
-            <p class="home-section-link"><a href="<?= $base ?>/products" class="pagination-link">View all</a></p>
+            <p class="home-section-link"><a href="<?= $base ?>/products" class="pagination-link">Xem tất cả</a></p>
         </div>
     </section>
     <?php endif; ?>
@@ -139,9 +139,9 @@ function home_product_card($p, $base) {
 
     <section class="home-cta">
         <div class="shop-container">
-            <h2 class="home-cta-title">Ready to explore?</h2>
-            <p class="home-cta-desc">Browse our full collection and find your next favorite.</p>
-            <a href="<?= $base ?>/products" class="btn-hero">Shop all products</a>
+            <h2 class="home-cta-title">Sẵn sàng khám phá?</h2>
+            <p class="home-cta-desc">Xem toàn bộ bộ sưu tập và tìm sản phẩm bạn yêu thích.</p>
+            <a href="<?= $base ?>/products" class="btn-hero">Mua sắm tất cả sản phẩm</a>
         </div>
     </section>
 </div>

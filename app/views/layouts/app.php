@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
@@ -29,8 +29,7 @@
         <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 
     <script type="application/ld+json">
@@ -74,10 +73,10 @@
                 <div class="flash-toast flash-toast--<?= $type ?>" role="alert" data-flash-toast>
                     <span class="flash-toast-icon"><i class="fas <?= $icon ?>"></i></span>
                     <span class="flash-toast-message"><?= htmlspecialchars($msg) ?></span>
-                    <?php if ($type === 'success' && (stripos($msg, 'cart') !== false || stripos($msg, 'added') !== false)): ?>
-                        <a href="<?= rtrim(base_url(), '/') ?>/cart" class="flash-toast-action">View cart</a>
+                    <?php if ($type === 'success' && (stripos($msg, 'cart') !== false || stripos($msg, 'added') !== false || stripos($msg, 'giỏ') !== false || stripos($msg, 'thêm') !== false)): ?>
+                        <a href="<?= rtrim(base_url(), '/') ?>/cart" class="flash-toast-action">Xem giỏ hàng</a>
                     <?php endif; ?>
-                    <button type="button" class="flash-toast-close" aria-label="Close" data-flash-close><i class="fas fa-times"></i></button>
+                    <button type="button" class="flash-toast-close" aria-label="Đóng" data-flash-close><i class="fas fa-times"></i></button>
                 </div>
             <?php endif; ?>
 

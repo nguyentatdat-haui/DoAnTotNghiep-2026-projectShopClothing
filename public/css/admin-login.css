@@ -26,8 +26,8 @@ body.login-page {
 
 .login-container {
     width: 100%;
-    max-width: 420px;
-    padding: 20px;
+    max-width: 480px;
+    padding: 30px;
     animation: fadeIn 0.8s ease-out;
 }
 
@@ -38,7 +38,7 @@ body.login-page {
 
 .login-card {
     background: var(--card-bg);
-    padding: 48px 40px;
+    padding: 56px 48px;
     border-radius: 24px;
     box-shadow: 
         0 4px 6px -1px rgba(0, 0, 0, 0.05), 
@@ -50,13 +50,16 @@ body.login-page {
 }
 
 .login-logo {
-    margin-bottom: 32px;
+    margin-bottom: 40px;
 }
 
 .login-logo img {
-    max-width: 140px;
+    max-width: 180px;
+    width: 100%;
     height: auto;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+    mix-blend-mode: multiply;
+    display: block;
+    margin: 0 auto;
 }
 
 .login-card h2 {
@@ -95,10 +98,10 @@ body.login-page {
 
 .form-group input {
     width: 100%;
-    padding: 14px 18px;
+    padding: 16px 20px;
     border: 1px solid var(--input-border);
-    border-radius: 12px;
-    font-size: 15px;
+    border-radius: 14px;
+    font-size: 16px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background: #ffffff;
     color: var(--text-main);
@@ -118,12 +121,12 @@ body.login-page {
 
 .btn-login {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     background: var(--primary-brown);
     color: white;
     border: none;
-    border-radius: 12px;
-    font-size: 16px;
+    border-radius: 14px;
+    font-size: 17px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
