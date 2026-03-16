@@ -2,17 +2,67 @@
 $base = rtrim(base_url(), '/');
 $adminBase = $base . '/admin';
 ?>
-<div class="login-box">
-    <h2><i class="fas fa-lock"></i> Đăng nhập Admin</h2>
-    <form method="post" action="<?= $adminBase ?>/login">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required autofocus value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="<?= $base ?>/css/admin-login.css">
+
+<style>
+    /* Override layout defaults for full-page centered login */
+    .admin-wrap {
+        display: block !important;
+        background: var(--bg-gradient);
+    }
+    .admin-main {
+        background: transparent !important;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .admin-content {
+        padding: 0 !important;
+        flex: none !important;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .flash-admin {
+        max-width: 400px;
+        margin: 0 auto 20px;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-logo">
+            <img src="<?= $base ?>/images/logo.png" alt="Logo">
         </div>
-        <div class="form-group">
-            <label for="password">Mật khẩu</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Đăng nhập</button>
-    </form>
+        <h2>Đăng nhập Hệ thống</h2>
+        <p>Vui lòng nhập thông tin của bạn</p>
+        
+        <form method="post" action="<?= $adminBase ?>/login">
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="email" name="email" required autofocus 
+                       placeholder="Nhập email của bạn"
+                       value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+            </div>
+            
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Mật khẩu</label>
+                <input type="password" id="password" name="password" required 
+                       placeholder="Nhập mật khẩu">
+            </div>
+            
+            <button type="submit" class="btn-login">
+                Đăng nhập ngay <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+        
+        <a href="<?= $base ?>" class="back-to-site">
+            <i class="fas fa-chevron-left"></i> Quay lại trang chủ
+        </a>
+    </div>
 </div>
+
