@@ -233,6 +233,68 @@ $title = $title ?? 'Quản trị';
         }
         .form-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1); outline: none; }
 
+        /* Custom Select / Combo Box for Admin */
+        .select-wrapper {
+            position: relative;
+            display: inline-block;
+            min-width: 220px;
+        }
+
+        .admin-select {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            width: 100% !important;
+            padding: 12px 40px 12px 20px !important;
+            background: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            color: #1e293b !important;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .admin-select:focus {
+            border-color: var(--primary) !important;
+            background: #fff !important;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1) !important;
+            outline: none;
+        }
+
+        .select-wrapper i {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            pointer-events: none;
+            font-size: 14px;
+        }
+
+        .status-update-container {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .form-group-inline {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-group-inline label {
+            font-weight: 700;
+            color: #475569;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         /* Flash Messages */
         .flash-admin { padding: 16px 20px; border-radius: 12px; margin-bottom: 25px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
         .flash-admin.success { background: #ecfdf5; color: #065f46; border-left: 4px solid #10b981; }

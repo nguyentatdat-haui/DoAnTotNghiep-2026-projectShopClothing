@@ -74,7 +74,7 @@ $recentOrders = $recent_orders ?? [];
                             <td><span class="status-badge <?= $statusClass ?>"><?= $statusText ?></span></td>
                             <td><?= date('d/m/Y H:i', strtotime($order['created_at'])) ?></td>
                             <td>
-                                <a href="<?= $adminBase ?>/orders/edit/<?= $order['id'] ?>" class="btn btn-sm btn-primary">Chi tiết</a>
+                                <a href="<?= $adminBase ?>/orders/<?= $order['id'] ?>" class="btn btn-sm btn-primary">Chi tiết</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

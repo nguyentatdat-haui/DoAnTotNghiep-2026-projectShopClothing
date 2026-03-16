@@ -17,16 +17,25 @@ $paymentMethod = is_object($order) ? $order->payment_method : $order['payment_me
     <p><strong>Khách hàng:</strong> <?= htmlspecialchars(is_object($user) ? $user->name : $user['name']) ?> — <?= htmlspecialchars(is_object($user) ? $user->email : $user['email']) ?></p>
     <?php endif; ?>
 
-    <form method="post" action="<?= $adminBase ?>/orders/update-status/<?= (int)$oid ?>" style="margin-bottom:20px;">
-        <label for="status">Trạng thái:</label>
-        <select name="status" id="status">
-            <option value="pending"<?= $status === 'pending' ? ' selected' : '' ?>>Chờ xử lý</option>
-            <option value="processing"<?= $status === 'processing' ? ' selected' : '' ?>>Đang xử lý</option>
-            <option value="completed"<?= $status === 'completed' ? ' selected' : '' ?>>Hoàn thành</option>
-            <option value="cancelled"<?= $status === 'cancelled' ? ' selected' : '' ?>>Đã hủy</option>
-        </select>
-        <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
-    </form>
+    <div class="status-update-container">
+        <form method="post" action="<?= $adminBase ?>/orders/update-status/<?= (int)$oid ?>" class="status-form">
+            <div class="form-group-inline">
+                <label for="status">Trạng thái đơn hàng:</label>
+                <div class="select-wrapper">
+                    <select name="status" id="status" class="admin-select">
+                        <option value="pending"<?= $status === 'pending' ? ' selected' : '' ?>>Chờ xử lý</option>
+                        <option value="processing"<?= $status === 'processing' ? ' selected' : '' ?>>Đang xử lý</option>
+                        <option value="completed"<?= $status === 'completed' ? ' selected' : '' ?>>Hoàn thành</option>
+                        <option value="cancelled"<?= $status === 'cancelled' ? ' selected' : '' ?>>Đã hủy</option>
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Cập nhật
+                </button>
+            </div>
+        </form>
+    </div>
 
     <table>
         <thead>
