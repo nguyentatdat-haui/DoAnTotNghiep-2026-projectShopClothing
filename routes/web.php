@@ -30,6 +30,12 @@ $router->get('/order/success/{id}', [OrderController::class, 'success'])->where(
 // maintenance routes
 $router->get('/maintenance', [HomeController::class, 'maintenance']); // 10 requests/hour
 
+// Chatbot routes
+use App\Controllers\ChatBotController;
+$router->get('/chatbot', [ChatBotController::class, 'index']);
+$router->post('/chatbot/chat', [ChatBotController::class, 'chat']);
+
+
 // ================================================================
 // Admin (login không cần auth, các route khác redirect về /admin/login nếu chưa đăng nhập)
 use App\Controllers\Admin\AuthController;

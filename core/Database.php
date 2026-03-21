@@ -10,6 +10,7 @@ class Database
     private $dbname;
     private $username;
     private $password;
+    private $port;
     private $connectionName;
 
     private function __construct($name = null)
@@ -25,6 +26,7 @@ class Database
         $this->dbname = Config::get($prefix . 'NAME');
         $this->username = Config::get($prefix . 'USER');
         $this->password = Config::get($prefix . 'PASS');
+        $this->port = Config::get($prefix . 'PORT', '3306');
     }
 
     public static function getInstance($name = null)
@@ -82,7 +84,7 @@ class Database
     private function connect()
     {
         try {
-            $dsn = "mysql:host={$this->host};dbname={$this->dbname};charset=utf8mb4";
+            $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname};charset=utf8mb4";
 
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

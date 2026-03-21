@@ -85,6 +85,9 @@
 
         <!-- Footer -->
         <?php View::include('blocks/footer') ?>
+
+        <!-- AI ChatBot Widget -->
+        <?php View::include('blocks/chatbot_widget') ?>
     </div>
     <!-- JavaScript -->
     <script src="<?= asset('js/app.js') ?>?v=<?= env('GLOBAL_STYLE_VERSION') ?>"></script>
