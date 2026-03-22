@@ -111,6 +111,23 @@ CREATE TABLE IF NOT EXISTS `product_images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
+-- Table structure for carts
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `carts` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `product_id` int(11) unsigned NOT NULL,
+  `product_variant_id` int(11) unsigned DEFAULT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `product_id` (`product_id`),
+  KEY `product_variant_id` (`product_variant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
 -- Table structure for orders
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `orders` (
