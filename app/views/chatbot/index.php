@@ -22,6 +22,12 @@
             </div>
         </div>
 
+        <div class="chatbot-quick-replies">
+            <button type="button" class="quick-reply">Sản phẩm cửa hàng</button>
+            <button type="button" class="quick-reply">Tư vấn</button>
+            <button type="button" class="quick-reply">Các bước đặt hàng</button>
+        </div>
+
         <!-- Input Area -->
         <div class="chat-input-area">
             <form id="chat-form">
@@ -156,11 +162,42 @@
 
 #chat-form button:hover { transform: scale(1.05); }
 
-/* Animation loading */
 .typing {
     font-style: italic;
     font-size: 12px;
     color: #888;
+}
+
+.chatbot-quick-replies {
+    padding: 15px 20px;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    background: #fff;
+    border-top: 1px solid #eee;
+    scrollbar-width: none;
+}
+
+.chatbot-quick-replies::-webkit-scrollbar {
+    display: none;
+}
+
+.quick-reply {
+    background: #f8f9fa;
+    border: 1px solid #e1e1e1;
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-reply:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
 }
 </style>
 
@@ -192,11 +229,20 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
         if (typingEl) {
             typingEl.querySelector('.message-content').innerHTML = result.reply || result.error;
         }
-    } catch (error) {
+        } catch (error) {
         console.error(error);
         const typingEl = document.getElementById(typingId);
         if (typingEl) typingEl.querySelector('.message-content').innerText = 'Lỗi kết nối!';
     }
+});
+
+// Handle Quick Replies
+document.querySelectorAll('.quick-reply').forEach(button => {
+    button.addEventListener('click', () => {
+        const input = document.getElementById('user-input');
+        input.value = button.innerText;
+        document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+    });
 });
 
 function appendMessage(role, text, id = null) {

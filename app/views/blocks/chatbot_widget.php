@@ -25,6 +25,12 @@
             </div>
         </div>
 
+        <div class="chatbot-quick-replies">
+            <button type="button" class="quick-reply">Sản phẩm cửa hàng</button>
+            <button type="button" class="quick-reply">Tư vấn</button>
+            <button type="button" class="quick-reply">Các bước đặt hàng</button>
+        </div>
+
         <div class="chatbot-input-area">
             <form id="chatbot-form">
                 <input type="text" id="chatbot-user-input" placeholder="Nhập tin nhắn..." autocomplete="off">
@@ -255,6 +261,38 @@
     font-style: italic;
     color: #999;
 }
+
+.chatbot-quick-replies {
+    padding: 10px 15px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    background: #fff;
+    border-top: 1px solid #eee;
+    scrollbar-width: none; /* Firefox */
+}
+
+.chatbot-quick-replies::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
+.quick-reply {
+    background: #f8f9fa;
+    border: 1px solid #e1e1e1;
+    color: #555;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quick-reply:hover {
+    background: #fbc531;
+    color: #000;
+    border-color: #fbc531;
+}
 </style>
 
 <script>
@@ -304,6 +342,14 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (err) {
             document.getElementById(loadingId).querySelector('.message-content').innerText = 'Lỗi kết nối LM Studio!';
         }
+    });
+
+    // Handle Quick Replies
+    document.querySelectorAll('.quick-reply').forEach(button => {
+        button.addEventListener('click', () => {
+            input.value = button.innerText;
+            form.dispatchEvent(new Event('submit'));
+        });
     });
 
     function appendMessage(role, text, id = null) {
