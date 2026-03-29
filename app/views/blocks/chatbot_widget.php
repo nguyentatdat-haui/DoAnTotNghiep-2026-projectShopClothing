@@ -336,11 +336,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             const data = await res.json();
-            const botMsg = data.reply || data.error;
+            const botMsg = data.reply || data.error || 'Dữ liệu không hợp lệ từ máy chủ.';
             
             document.getElementById(loadingId).querySelector('.message-content').innerHTML = botMsg;
         } catch (err) {
-            document.getElementById(loadingId).querySelector('.message-content').innerText = 'Lỗi kết nối LM Studio!';
+            console.error('Chat Error:', err);
+            document.getElementById(loadingId).querySelector('.message-content').innerText = 'Lỗi hệ thống: ' + (err.message || 'Không rõ nguyên nhân');
         }
     });
 

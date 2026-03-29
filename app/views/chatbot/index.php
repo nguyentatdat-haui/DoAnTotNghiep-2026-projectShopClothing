@@ -232,7 +232,7 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
         } catch (error) {
         console.error(error);
         const typingEl = document.getElementById(typingId);
-        if (typingEl) typingEl.querySelector('.message-content').innerText = 'Lỗi kết nối!';
+        if (typingEl) typingEl.querySelector('.message-content').innerText = 'Lỗi hệ thống: ' + (error.message || 'Không rõ nguyên nhân');
     }
 });
 
