@@ -23,19 +23,19 @@ $old = $_SESSION['checkout_old'] ?? [];
                         <h2>Thông tin liên hệ & giao hàng</h2>
                         <div class="form-row">
                             <label for="customer_name">Họ tên <span class="required">*</span></label>
-                            <input type="text" id="customer_name" name="customer_name" value="<?= htmlspecialchars($old['customer_name'] ?? '') ?>" required>
+                            <input type="text" id="customer_name" name="customer_name" value="<?= htmlspecialchars($old['customer_name'] ?? (is_object($user) ? $user->name : ($user['name'] ?? ''))) ?>" required>
                         </div>
                         <div class="form-row">
                             <label for="customer_email">Email <span class="required">*</span></label>
-                            <input type="email" id="customer_email" name="customer_email" value="<?= htmlspecialchars($old['customer_email'] ?? '') ?>" required>
+                            <input type="email" id="customer_email" name="customer_email" value="<?= htmlspecialchars($old['customer_email'] ?? (is_object($user) ? $user->email : ($user['email'] ?? ''))) ?>" required>
                         </div>
                         <div class="form-row">
                             <label for="customer_phone">Số điện thoại <span class="required">*</span></label>
-                            <input type="text" id="customer_phone" name="customer_phone" value="<?= htmlspecialchars($old['customer_phone'] ?? '') ?>" required>
+                            <input type="text" id="customer_phone" name="customer_phone" value="<?= htmlspecialchars($old['customer_phone'] ?? (is_object($user) ? $user->phone : ($user['phone'] ?? ''))) ?>" required>
                         </div>
                         <div class="form-row">
                             <label for="customer_address">Địa chỉ <span class="required">*</span></label>
-                            <textarea id="customer_address" name="customer_address" rows="3" required><?= htmlspecialchars($old['customer_address'] ?? '') ?></textarea>
+                            <textarea id="customer_address" name="customer_address" rows="3" required><?= htmlspecialchars($old['customer_address'] ?? (is_object($user) ? $user->address : ($user['address'] ?? ''))) ?></textarea>
                         </div>
                     </section>
                     <section class="checkout-block">

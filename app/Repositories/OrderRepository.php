@@ -41,4 +41,13 @@ class OrderRepository extends BaseRepository
             'total_pages' => $totalPages,
         ];
     }
+
+    /**
+     * Get orders by User ID.
+     */
+    public function getByUserId($userId)
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE user_id = :user_id ORDER BY id DESC";
+        return $this->db->fetchAll($sql, ['user_id' => $userId]);
+    }
 }

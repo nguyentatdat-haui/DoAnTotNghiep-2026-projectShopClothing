@@ -214,6 +214,7 @@
 .message-content {
     padding: 10px 14px;
     border-radius: 14px;
+    white-space: pre-line;
 }
 
 .message.bot .message-content {

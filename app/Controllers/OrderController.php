@@ -49,6 +49,12 @@ class OrderController extends BaseController
         foreach ($cart as $item) {
             $total += (float)($item['price'] ?? 0) * (int)($item['quantity'] ?? 0);
         }
+
+        $user = null;
+        if (!empty($_SESSION['user_id'])) {
+            $user = $this->userRepository->findById($_SESSION['user_id']);
+        }
+
         $categories = $this->categoryRepository->getAllCategoriesWithChild();
         $data = [
             'title' => 'Checkout',
@@ -56,6 +62,7 @@ class OrderController extends BaseController
             'categories' => $categories,
             'cart' => $cart,
             'cart_total' => $total,
+            'user' => $user,
         ];
         return $this->view('checkout/index', $data);
     }
@@ -111,6 +118,11 @@ class OrderController extends BaseController
             $user = $this->userRepository->findBy('email', $email);
             if ($user) {
                 $userId = is_object($user) ? $user->id : $user['id'];
+                // Update user info if it's currently empty or changed
+                $this->userRepository->update($userId, [
+                    'phone' => $phone,
+                    'address' => $address
+                ]);
             } else {
                 $userData = [
                     'name' => $name,
@@ -120,11 +132,14 @@ class OrderController extends BaseController
                     'role' => 'guest',
                     'password' => password_hash('guest_' . uniqid('', true), PASSWORD_DEFAULT),
                 ];
-                $user = $this->userRepository->create($userData);
-                if (!$user || !($user->id ?? null)) {
-                    throw new \Exception('Could not create customer.');
-                }
-                $userId = is_object($user) ? $user->id : $user['id'];
+                $newUser = $this->userRepository->create($userData);
+                $userId = is_object($newUser) ? $newUser->id : $newUser['id'];
+            }
+
+            // Sync with session if user is logged in
+            if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $userId) {
+                $_SESSION['user_phone'] = $phone;
+                $_SESSION['user_address'] = $address;
             }
 
             $order = $this->orderRepository->create([
@@ -192,5 +207,41 @@ class OrderController extends BaseController
             'order_id' => $id,
         ];
         return $this->view('checkout/success', $data);
+    }
+
+    /**
+     * User's orders history.
+     */
+    public function myOrders()
+    {
+        if (empty($_SESSION['user_id'])) {
+            $this->flashMessage('Vui lòng đăng nhập để xem đơn hàng.', 'info');
+            return $this->redirect(rtrim(base_url(), '/') . '/login');
+        }
+
+        $userId = $_SESSION['user_id'];
+        $orders = $this->orderRepository->getByUserId($userId);
+
+        // Fetch items for each order
+        foreach ($orders as &$order) {
+            $orderId = is_object($order) ? $order->id : $order['id'];
+            $items = $this->orderItemRepository->getByOrderId($orderId);
+            
+            if (is_object($order)) {
+                $order->items = $items;
+            } else {
+                $order['items'] = $items;
+            }
+        }
+
+        $categories = $this->categoryRepository->getAllCategoriesWithChild();
+        $data = [
+            'title' => 'Đơn hàng của tôi',
+            'description' => 'Theo dõi tình trạng đơn hàng của bạn',
+            'categories' => $categories,
+            'orders' => $orders,
+        ];
+
+        return $this->view('orders/index', $data);
     }
 }

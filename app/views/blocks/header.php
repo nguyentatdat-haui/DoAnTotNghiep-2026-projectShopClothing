@@ -110,6 +110,116 @@ $headerCategories = $categories ?? [];
         background: #111 !important;
         color: #fff !important;
     }
+    
+    .header-icons {
+        display: flex !important;
+        align-items: center !important;
+        gap: 15px !important;
+    }
+
+    .user-account-link {
+        width: 50px !important;
+        height: 50px !important;
+        background: #f6f6f6 !important;
+        border-radius: 50% !important;
+        font-size: 18px !important;
+        color: #111 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.3s ease !important;
+        text-decoration: none !important;
+    }
+
+    .user-account-link:hover {
+        background: #111 !important;
+        color: #fff !important;
+    }
+
+    /* User Profile Dropdown */
+    .user-account-dropdown {
+        position: relative;
+    }
+    .user-dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #fff;
+        min-width: 220px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        padding: 15px 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    .user-account-dropdown:hover .user-dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(5px);
+    }
+    .user-info {
+        padding: 0 20px 10px 20px;
+        text-align: left !important;
+    }
+    .user-name {
+        font-weight: 700;
+        color: #111 !important;
+        margin: 0 !important;
+        font-size: 15px !important;
+        text-transform: none !important;
+        line-height: 1.2 !important;
+    }
+    .user-email {
+        font-size: 12px !important;
+        color: #666 !important;
+        margin: 5px 0 0 0 !important;
+        text-transform: none !important;
+        line-height: 1.2 !important;
+    }
+    .user-dropdown-menu hr {
+        border: 0;
+        border-top: 1px solid #f0f0f0;
+        margin: 10px 0;
+    }
+    .user-dropdown-menu a {
+        display: flex !important;
+        align-items: center !important;
+        padding: 10px 20px !important;
+        color: #333 !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+        height: auto !important;
+        line-height: 1.4 !important;
+        text-transform: none !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .user-dropdown-menu a i {
+        margin-right: 12px !important;
+        width: 16px !important;
+        text-align: center !important;
+        color: #d4af37 !important;
+        font-size: 14px !important;
+    }
+    .user-dropdown-menu a:hover {
+        background: #f9f9f9 !important;
+        color: #d4af37 !important;
+    }
+    .user-dropdown-menu a.logout-link {
+        color: #ff4d4d !important;
+    }
+    .user-dropdown-menu a.logout-link i {
+        color: #ff4d4d !important;
+    }
+    .user-dropdown-menu a.logout-link:hover {
+        background: #fff5f5 !important;
+    }
 </style>
 <header class="top-header">
     <div class="header-top">
@@ -160,6 +270,28 @@ $headerCategories = $categories ?? [];
                     <span class="cart-icon-wrap"><i class="fas fa-shopping-bag"></i></span>
                     <span class="cart-count"><?= (int)($cart_count ?? 0) ?></span>
                 </a>
+
+                <!-- User Account -->
+                <?php if (!empty($_SESSION['user_id'])): ?>
+                    <div class="user-account-dropdown">
+                        <a href="javascript:void(0)" class="user-account-link" title="Tài khoản">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="user-dropdown-menu">
+                            <div class="user-info">
+                                <p class="user-name"><?= htmlspecialchars($_SESSION['user_name']) ?></p>
+                                <p class="user-email"><?= htmlspecialchars($_SESSION['user_email']) ?></p>
+                            </div>
+                            <hr>
+                            <a href="<?= base_url() ?>/my-orders"><i class="fas fa-box"></i> Đơn hàng của tôi</a>
+                            <a href="<?= base_url() ?>/logout" class="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <a href="<?= base_url() ?>/login" class="user-account-link" title="Đăng nhập">
+                        <i class="fas fa-user"></i>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

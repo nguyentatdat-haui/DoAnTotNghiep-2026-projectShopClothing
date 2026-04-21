@@ -6,6 +6,17 @@ use App\Controllers\CartController;
 use App\Controllers\OrderController;
 use App\Middleware\MiddlewareHelper;
 
+// User Auth
+use App\Controllers\AuthController as UserAuthController;
+$router->get('/login', [UserAuthController::class, 'loginForm']);
+$router->post('/login', [UserAuthController::class, 'login']);
+$router->get('/register', [UserAuthController::class, 'registerForm']);
+$router->post('/register', [UserAuthController::class, 'register']);
+$router->get('/logout', [UserAuthController::class, 'logout']);
+
+// User Profile / Orders
+$router->get('/my-orders', [OrderController::class, 'myOrders']);
+
 // Home routes - có thể truyền số lần request tùy ý
 $router->get('/', [HomeController::class, 'index'], [MiddlewareHelper::rateLimit()]); // 1 request/second
 $router->get('/company', [HomeController::class, 'company']);

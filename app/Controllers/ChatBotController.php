@@ -7,9 +7,16 @@ use CommonHelper;
 class ChatBotController extends BaseController
 {
     /**
-     * LM Studio API Endpoint (Default)
+     * Groq API Endpoint
      */
-    private $lmStudioApi = "http://localhost:1234/v1/chat/completions";
+    private $groqApi = "https://api.groq.com/openai/v1/chat/completions";
+    private $groqApiKey;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->groqApiKey = \Config::get('GROQ_API_KEY');
+    }
 
     public function index()
     {
@@ -27,89 +34,88 @@ class ChatBotController extends BaseController
                 return $this->json(['error' => 'Message is required'], 400);
             }
 
-            // 1. Lấy thông tin từ Database để làm ngữ cảnh (Context)
+            // 1. Lấy thông tin từ Database bằng SQL trực tiếp để đảm bảo dữ liệu mới nhất
             $context = "";
             try {
-                $categories = \App\Models\Category::all() ?: [];
-                $products = \App\Models\Product::all() ?: [];
+                $db = \Database::getInstance();
                 
-                // Giới hạn số lượng sản phẩm để tránh quá tải token (lấy 15 sản phẩm mới nhất)
-                if (is_array($products)) {
-                    $products = array_slice($products, -15);
+                // Lấy danh sách sản phẩm thực tế từ DB
+                $products = $db->fetchAll("SELECT name, base_price, discount_price FROM products ORDER BY id DESC LIMIT 30");
+                $categories = $db->fetchAll("SELECT name FROM categories");
+
+                $catNames = [];
+                foreach ($categories as $cat) {
+                    $catNames[] = $cat['name'];
+                }
+
+                $prodLines = [];
+                if (!empty($products)) {
+                    foreach ($products as $p) {
+                        $base = (float)$p['base_price'];
+                        $discount = (!empty($p['discount_price']) && $p['discount_price'] > 0) ? (float)$p['discount_price'] : null;
+                        
+                        $priceStr = number_format($base) . "đ";
+                        if ($discount && $base > 0) {
+                            $percent = round((($base - $discount) / $base) * 100);
+                            $priceStr = number_format($discount) . "đ (Gốc: " . number_format($base) . "đ) [GIẢM $percent%]";
+                        }
+                        $prodLines[] = "- {$p['name']}: {$priceStr}";
+                    }
+                }
+
+                $context = "DANH MỤC: " . implode(", ", $catNames) . "\n";
+                $context .= "SẢN PHẨM HIỆN CÓ TRONG KHO (DỮ LIỆU THỰC):\n";
+                if (empty($prodLines)) {
+                    $context .= "(Hiện tại không có sản phẩm nào trong database)";
                 } else {
-                    $products = [];
+                    $context .= implode("\n", $prodLines);
                 }
-
-                $categoryNames = array_map(function($c) { return $c->name; }, $categories);
-                $productInfo = array_map(function($p) {
-                    // Ưu tiên giá khuyến mãi nếu có
-                    $finalPrice = (!empty($p->discount_price) && $p->discount_price > 0) ? $p->discount_price : $p->base_price;
-                    $price = $finalPrice ? number_format((float)$finalPrice) . "đ" : "Liên hệ";
-                    return "- {$p->name} (Giá: {$price})";
-                }, $products);
-
-                if (empty($productInfo)) {
-                    $productInfo[] = "(Hiện tại shop đang cập nhật sản phẩm, chưa có mặt hàng nào)";
-                }
-
-                $context = "DANH MỤC SẢN PHẨM: " . implode(", ", $categoryNames) . "\n";
-                $context .= "DANH SÁCH SẢN PHẨM Ở SHOP:\n" . implode("\n", $productInfo);
             } catch (\Throwable $e) {
-                // Nếu lỗi DB thì ghi nhận lỗi
-                $context = "Lưu ý: Không thể truy cập database. Lỗi: " . $e->getMessage();
+                $context = "Lỗi truy cập dữ liệu: " . $e->getMessage();
             }
 
-            // Prepare data for LM Studio
+            // Prepare data for Groq
             $data = [
-                "model" => "local-model",
+                "model" => "llama-3.3-70b-versatile",
                 "messages" => [
-                    ["role" => "system", "content" => "Bạn là một trợ lý bán hàng chuyên nghiệp của ClothingShop.
-DƯỚI ĐÂY LÀ THÔNG TIN CỬA HÀNG HIỆN TẠI (CHỈ BÁN NHỮNG MÓN NÀY):
+                    ["role" => "system", "content" => "Bạn là Trợ lý ảo của ClothingShop.
+DƯỚI ĐÂY LÀ DỮ LIỆU THỰC TẾ TRONG DATABASE CỦA CỬA HÀNG:
 $context
 
-NHIỆM VỤ:
-- Hỗ trợ khách hàng về sản phẩm quần áo, tư vấn chọn size, chính sách đổi trả.
-- Xử lý các yêu cầu nhanh:
-  + Nếu khách nói 'Sản phẩm cửa hàng' hoặc hỏi sản phẩm: CHỈ ĐƯỢC LIỆT KÊ các sản phẩm có thật trong phần [DANH SÁCH SẢN PHẨM Ở SHOP] bên trên. TUYỆT ĐỐI KHÔNG tự bịa ra hay sáng tác thêm sản phẩm hoặc giá ảo. Nếu danh sách chỉ có 2 sản phẩm, chỉ liệt kê đúng 2 sản phẩm đó.
-  + Nếu khách nói 'Tư vấn': Mời khách cho biết đang tìm đồ nam, nữ hay có nhu cầu cụ thể nào để dễ bề tư vấn.
-  + Nếu khách nói 'Các bước đặt hàng': Hướng dẫn ngắn gọn các bước: Chọn sản phẩm -> Thêm vào giỏ -> Điền thông tin -> Đặt hàng.
-- Trả lời ngắn gọn, lịch sự, thân thiện bằng tiếng Việt. Dưới 100 chữ."],
+QUY TẮC CỰC KỲ QUAN TRỌNG:
+1. CHỈ ĐƯỢC PHÉP TRẢ LỜI dựa trên danh sách sản phẩm được cung cấp ở trên.
+2. TUYỆT ĐỐI KHÔNG được bịa ra các sản phẩm như 'Quần jeans', 'Giày', 'Áo khoác' nếu chúng không có trong danh sách TRÊN.
+3. Nếu khách hỏi về sản phẩm không có trong danh sách, hãy lịch sự báo là 'Hiện tại shop chưa có mặt hàng này'.
+4. Khi liệt kê, LUÔN LUÔN xuống dòng cho mỗi sản phẩm để dễ nhìn.
+5. Nếu trong database báo 'không có sản phẩm nào', hãy báo khách là shop đang cập nhật hàng mới.
+6. Ngôn ngữ: Tiếng Việt, thân thiện, dùng emoji."],
                     ["role" => "user", "content" => $message]
                 ],
-                "temperature" => 0.4
+                "temperature" => 0.3,
+                "max_tokens" => 600
             ];
 
             $headers = [
-                'Content-Type: application/json'
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $this->groqApiKey
             ];
 
-            // Use the existing helper for cURL
-            $result = CommonHelper::execute_curl_request($this->lmStudioApi, $data, $headers, 'POST');
+            $result = \CommonHelper::execute_curl_request($this->groqApi, $data, $headers, 'POST');
 
             if ($result['error']) {
-                $errorMsg = 'Không thể kết nối tới LM Studio (' . $this->lmStudioApi . '). Hãy chắc chắn Cổng 1234 đang mở.';
-                if (isset($result['error'])) {
-                    $errorMsg .= ' Chi tiết: ' . $result['error'];
-                }
-                if (isset($result['http_code']) && $result['http_code'] > 0) {
-                    $errorMsg .= ' Mã HTTP: ' . $result['http_code'];
-                }
-                return $this->json([
-                    'error' => $errorMsg,
-                    'details' => $result['error']
-                ], 500);
+                return $this->json(['reply' => 'Hệ thống trợ lý ảo đang bảo trì, vui lòng thử lại sau ít phút. 🙏']);
             }
 
             $response = json_decode($result['response'], true);
-            $botMessage = $response['choices'][0]['message']['content'] ?? 'Xin lỗi, tôi gặp trục trặc khi xử lý câu hỏi. Response: ' . $result['response'];
+            if (isset($response['error'])) {
+                return $this->json(['reply' => 'Hệ thống trợ lý ảo đang bảo trì, vui lòng thử lại sau ít phút. 🙏']);
+            }
 
-            return $this->json([
-                'reply' => $botMessage
-            ]);
+            $botMessage = $response['choices'][0]['message']['content'] ?? 'Tôi đang bận một chút, bạn thử lại sau nhen!';
+
+            return $this->json(['reply' => $botMessage]);
         } catch (\Throwable $e) {
-            return $this->json([
-                'error' => 'Lỗi hệ thống (PHP): ' . $e->getMessage() . ' File: ' . $e->getFile() . ' Line: ' . $e->getLine()
-            ], 500);
+            return $this->json(['reply' => 'Hệ thống trợ lý ảo đang bảo trì.']);
         }
     }
 }
