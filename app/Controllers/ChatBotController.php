@@ -75,22 +75,20 @@ class ChatBotController extends BaseController
             }
 
             // 2. Kiểm tra API Key
-            if (empty($this->groqApiKey)) {
+            $cleanKey = trim($this->groqApiKey);
+            if (empty($cleanKey)) {
                 return $this->json(['reply' => 'Lỗi: Chưa cấu hình GROQ_API_KEY trong file .env 🔑']);
+            }
+
+            if (strpos($cleanKey, 'gsk_') !== 0) {
+                return $this->json(['reply' => 'Lỗi: API Key trong .env không đúng định dạng (phải bắt đầu bằng gsk_). Hiện tại: ' . substr($cleanKey, 0, 5) . '...']);
             }
 
             // Prepare data for Groq
             $data = [
-                "model" => "llama3-8b-8192", // Sử dụng model này cho ổn định và ít bị giới hạn
+                "model" => "llama-3.1-8b-instant", // Model này rất nhẹ và ổn định
                 "messages" => [
-                    ["role" => "system", "content" => "Bạn là Trợ lý ảo của ClothingShop.
-DƯỚI ĐÂY LÀ DỮ LIỆU THỰC TẾ TRONG DATABASE CỦA CỬA HÀNG:
-$context
-
-QUY TẮC:
-1. Trả lời dựa trên danh sách sản phẩm.
-2. Nếu không có, báo 'Hiện tại shop chưa có mặt hàng này'.
-3. Ngôn ngữ: Tiếng Việt, thân thiện."],
+                    ["role" => "system", "content" => "Bạn là Trợ lý ảo của ClothingShop. Trả lời ngắn gọn, thân thiện bằng tiếng Việt."],
                     ["role" => "user", "content" => $message]
                 ],
                 "temperature" => 0.5,
@@ -100,8 +98,8 @@ QUY TẮC:
             $headers = [
                 'Content-Type: application/json',
                 'Accept: application/json',
-                'User-Agent: ClothingShop-ChatBot/1.0',
-                'Authorization: Bearer ' . trim($this->groqApiKey)
+                'User-Agent: ClothingShop-ChatBot/1.1',
+                'Authorization: Bearer ' . $cleanKey
             ];
 
             $result = \CommonHelper::execute_curl_request($this->groqApi, $data, $headers, 'POST');

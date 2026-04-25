@@ -335,7 +335,10 @@ class CommonHelper
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); // Quan trọng: Ép dùng IPv4 để tránh lỗi trên Windows
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
         // Set method and data
         if ($method === 'POST') {
