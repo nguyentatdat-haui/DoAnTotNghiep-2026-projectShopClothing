@@ -74,36 +74,38 @@ class ChatBotController extends BaseController
                 $context = "Lỗi truy cập dữ liệu: " . $e->getMessage();
             }
 
+            // 2. Kiểm tra API Key
+            if (empty($this->groqApiKey)) {
+                return $this->json(['reply' => 'Lỗi: Chưa cấu hình GROQ_API_KEY trong file .env 🔑']);
+            }
+
             // Prepare data for Groq
             $data = [
-                "model" => "llama-3.3-70b-versatile",
+                "model" => "llama3-8b-8192", // Sử dụng model này cho ổn định và ít bị giới hạn
                 "messages" => [
                     ["role" => "system", "content" => "Bạn là Trợ lý ảo của ClothingShop.
 DƯỚI ĐÂY LÀ DỮ LIỆU THỰC TẾ TRONG DATABASE CỦA CỬA HÀNG:
 $context
 
-QUY TẮC CỰC KỲ QUAN TRỌNG:
-1. CHỈ ĐƯỢC PHÉP TRẢ LỜI dựa trên danh sách sản phẩm được cung cấp ở trên.
-2. TUYỆT ĐỐI KHÔNG được bịa ra các sản phẩm như 'Quần jeans', 'Giày', 'Áo khoác' nếu chúng không có trong danh sách TRÊN.
-3. Nếu khách hỏi về sản phẩm không có trong danh sách, hãy lịch sự báo là 'Hiện tại shop chưa có mặt hàng này'.
-4. Khi liệt kê, LUÔN LUÔN xuống dòng cho mỗi sản phẩm để dễ nhìn.
-5. Nếu trong database báo 'không có sản phẩm nào', hãy báo khách là shop đang cập nhật hàng mới.
-6. Ngôn ngữ: Tiếng Việt, thân thiện, dùng emoji."],
+QUY TẮC:
+1. Trả lời dựa trên danh sách sản phẩm.
+2. Nếu không có, báo 'Hiện tại shop chưa có mặt hàng này'.
+3. Ngôn ngữ: Tiếng Việt, thân thiện."],
                     ["role" => "user", "content" => $message]
                 ],
-                "temperature" => 0.3,
-                "max_tokens" => 600
+                "temperature" => 0.5,
+                "max_tokens" => 500
             ];
 
             $headers = [
                 'Content-Type: application/json',
-                'Authorization: Bearer ' . $this->groqApiKey
+                'Authorization: Bearer ' . trim($this->groqApiKey)
             ];
 
             $result = \CommonHelper::execute_curl_request($this->groqApi, $data, $headers, 'POST');
 
             if ($result['error']) {
-                $errorMsg = 'Hệ thống trợ lý ảo đang bảo trì, vui lòng thử lại sau ít phút. 🙏';
+                $errorMsg = 'Hệ thống trợ lý ảo đang bảo trì. 🙏';
                 if (\Config::bool('APP_DEBUG')) {
                     $errorMsg .= ' (CURL Error: ' . $result['error'] . ')';
                 }
@@ -111,10 +113,14 @@ QUY TẮC CỰC KỲ QUAN TRỌNG:
             }
 
             $response = json_decode($result['response'], true);
-            if (isset($response['error'])) {
-                $errorMsg = 'Hệ thống trợ lý ảo đang bảo trì, vui lòng thử lại sau ít phút. 🙏';
+            $httpCode = $result['http_code'];
+
+            if ($httpCode !== 200) {
+                $errorMsg = 'Hệ thống trợ lý ảo đang bảo trì. 🙏';
                 if (\Config::bool('APP_DEBUG')) {
-                    $errorMsg .= ' (Groq Error: ' . ($response['error']['message'] ?? 'Unknown error') . ')';
+                    $groqError = $response['error']['message'] ?? ($response['error'] ?? 'Unknown Error');
+                    if (is_array($groqError)) $groqError = json_encode($groqError);
+                    $errorMsg .= " (Groq Error $httpCode: $groqError)";
                 }
                 return $this->json(['reply' => $errorMsg]);
             }
