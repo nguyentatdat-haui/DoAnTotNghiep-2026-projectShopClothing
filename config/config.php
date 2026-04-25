@@ -13,9 +13,22 @@ class Config
             $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             
             foreach ($lines as $line) {
-                if (strpos($line, '=') !== false && strpos($line, '#') !== 0) {
+                $line = trim($line);
+                if ($line === '' || strpos($line, '#') === 0) {
+                    continue;
+                }
+                
+                if (strpos($line, '=') !== false) {
                     list($key, $value) = explode('=', $line, 2);
-                    self::$config[trim($key)] = trim($value);
+                    $key = trim($key);
+                    $value = trim($value);
+                    
+                    // Remove quotes if present
+                    if (preg_match('/^"(.+)"$/', $value, $matches) || preg_match("/^'(.+)'$/", $value, $matches)) {
+                        $value = $matches[1];
+                    }
+                    
+                    self::$config[$key] = $value;
                 }
             }
         }

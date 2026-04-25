@@ -103,12 +103,20 @@ QUY TẮC CỰC KỲ QUAN TRỌNG:
             $result = \CommonHelper::execute_curl_request($this->groqApi, $data, $headers, 'POST');
 
             if ($result['error']) {
-                return $this->json(['reply' => 'Hệ thống trợ lý ảo đang bảo trì, vui lòng thử lại sau ít phút. 🙏']);
+                $errorMsg = 'Hệ thống trợ lý ảo đang bảo trì, vui lòng thử lại sau ít phút. 🙏';
+                if (\Config::bool('APP_DEBUG')) {
+                    $errorMsg .= ' (CURL Error: ' . $result['error'] . ')';
+                }
+                return $this->json(['reply' => $errorMsg]);
             }
 
             $response = json_decode($result['response'], true);
             if (isset($response['error'])) {
-                return $this->json(['reply' => 'Hệ thống trợ lý ảo đang bảo trì, vui lòng thử lại sau ít phút. 🙏']);
+                $errorMsg = 'Hệ thống trợ lý ảo đang bảo trì, vui lòng thử lại sau ít phút. 🙏';
+                if (\Config::bool('APP_DEBUG')) {
+                    $errorMsg .= ' (Groq Error: ' . ($response['error']['message'] ?? 'Unknown error') . ')';
+                }
+                return $this->json(['reply' => $errorMsg]);
             }
 
             $botMessage = $response['choices'][0]['message']['content'] ?? 'Tôi đang bận một chút, bạn thử lại sau nhen!';

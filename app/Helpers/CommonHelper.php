@@ -96,24 +96,31 @@ class CommonHelper
      */
     public static function baseUrl()
     {
-        if (env('WEB_TYPE') == '2') {
-            $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
-            $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-            $baseUrl = $protocol . $host;
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $autoBaseUrl = $protocol . $host;
 
+        // Nếu WEB_TYPE = 2 hoặc BASE_URL là localhost (mặc định), ưu tiên tự động nhận diện
+        $configBaseUrl = self::config('BASE_URL');
+        $isLocalhost = strpos($configBaseUrl, 'localhost') !== false;
+
+        if (env('WEB_TYPE') == '2' || $isLocalhost || empty($configBaseUrl)) {
             // Support BASE_NAME from env/config when app is in a subfolder
-            $baseName = env('BASE_NAME');
-            if (!$baseName) {
-                $baseName = self::config('BASE_NAME', null);
-            }
+            $baseName = env('BASE_NAME') ?: self::config('BASE_NAME', '');
+            
             if ($baseName) {
-                $baseUrl .= '/' . trim($baseName, '/');
+                $autoBaseUrl .= '/' . trim($baseName, '/');
+            } else if ($isLocalhost) {
+                // Nếu config là localhost nhưng không có BASE_NAME, lấy path từ config cũ nếu có
+                $path = parse_url($configBaseUrl, PHP_URL_PATH);
+                if ($path) {
+                    $autoBaseUrl .= $path;
+                }
             }
-
-            return $baseUrl;
-        } else {
-            return self::config('BASE_URL');
+            return rtrim($autoBaseUrl, '/');
         }
+
+        return rtrim($configBaseUrl, '/');
     }
 
     /**

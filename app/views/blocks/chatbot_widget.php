@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData();
             formData.append('message', msg);
 
-            const res = await fetch('<?= Config::get("BASE_URL") ?>/chatbot/chat', {
+            const res = await fetch('<?= rtrim(base_url(), "/") ?>/chatbot/chat', {
                 method: 'POST',
                 body: formData
             });
