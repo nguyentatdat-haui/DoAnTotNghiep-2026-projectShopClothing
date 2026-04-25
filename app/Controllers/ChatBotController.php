@@ -99,6 +99,8 @@ QUY TẮC:
 
             $headers = [
                 'Content-Type: application/json',
+                'Accept: application/json',
+                'User-Agent: ClothingShop-ChatBot/1.0',
                 'Authorization: Bearer ' . trim($this->groqApiKey)
             ];
 
@@ -112,14 +114,19 @@ QUY TẮC:
                 return $this->json(['reply' => $errorMsg]);
             }
 
-            $response = json_decode($result['response'], true);
+            $responseBody = $result['response'];
+            $response = json_decode($responseBody, true);
             $httpCode = $result['http_code'];
 
             if ($httpCode !== 200) {
                 $errorMsg = 'Hệ thống trợ lý ảo đang bảo trì. 🙏';
                 if (\Config::bool('APP_DEBUG')) {
-                    $groqError = $response['error']['message'] ?? ($response['error'] ?? 'Unknown Error');
-                    if (is_array($groqError)) $groqError = json_encode($groqError);
+                    if ($response && isset($response['error'])) {
+                        $groqError = $response['error']['message'] ?? json_encode($response['error']);
+                    } else {
+                        // Nếu không phải JSON (có thể là trang HTML 403 của Cloudflare)
+                        $groqError = substr(strip_tags($responseBody), 0, 100); 
+                    }
                     $errorMsg .= " (Groq Error $httpCode: $groqError)";
                 }
                 return $this->json(['reply' => $errorMsg]);
