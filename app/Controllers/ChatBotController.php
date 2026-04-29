@@ -7,15 +7,15 @@ use CommonHelper;
 class ChatBotController extends BaseController
 {
     /**
-     * Groq API Endpoint
+     * Gemini API Endpoint
      */
-    private $groqApi = "https://api.groq.com/openai/v1/chat/completions";
-    private $groqApiKey;
+    private $geminiApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+    private $geminiApiKey;
 
     public function __construct()
     {
         parent::__construct();
-        $this->groqApiKey = \Config::get('GROQ_API_KEY');
+        $this->geminiApiKey = \Config::get('GEMINI_API_KEY');
     }
 
     public function index()
@@ -75,34 +75,39 @@ class ChatBotController extends BaseController
             }
 
             // 2. Kiểm tra API Key
-            $cleanKey = trim($this->groqApiKey);
+            $cleanKey = trim($this->geminiApiKey);
             if (empty($cleanKey)) {
-                return $this->json(['reply' => 'Lỗi: Chưa cấu hình GROQ_API_KEY trong file .env 🔑']);
+                return $this->json(['reply' => 'Lỗi: Chưa cấu hình GEMINI_API_KEY trong file .env 🔑']);
             }
 
-            if (strpos($cleanKey, 'gsk_') !== 0) {
-                return $this->json(['reply' => 'Lỗi: API Key trong .env không đúng định dạng (phải bắt đầu bằng gsk_). Hiện tại: ' . substr($cleanKey, 0, 5) . '...']);
-            }
+            // Prepare data for Gemini
+            $fullPrompt = "Bạn là Trợ lý ảo của ClothingShop. Trả lời ngắn gọn, thân thiện bằng tiếng Việt.\n\n";
+            $fullPrompt .= "THÔNG TIN CỬA HÀNG:\n" . $context . "\n\n";
+            $fullPrompt .= "Khách hàng hỏi: " . $message;
 
-            // Prepare data for Groq
             $data = [
-                "model" => "llama-3.1-8b-instant", // Model này rất nhẹ và ổn định
-                "messages" => [
-                    ["role" => "system", "content" => "Bạn là Trợ lý ảo của ClothingShop. Trả lời ngắn gọn, thân thiện bằng tiếng Việt."],
-                    ["role" => "user", "content" => $message]
+                "contents" => [
+                    [
+                        "parts" => [
+                            ["text" => $fullPrompt]
+                        ]
+                    ]
                 ],
-                "temperature" => 0.5,
-                "max_tokens" => 500
+                "generationConfig" => [
+                    "temperature" => 0.5,
+                    "maxOutputTokens" => 500
+                ]
             ];
 
             $headers = [
                 'Content-Type: application/json',
                 'Accept: application/json',
-                'User-Agent: ClothingShop-ChatBot/1.1',
-                'Authorization: Bearer ' . $cleanKey
+                'User-Agent: ClothingShop-ChatBot/1.1'
             ];
 
-            $result = \CommonHelper::execute_curl_request($this->groqApi, $data, $headers, 'POST');
+            $endpoint = $this->geminiApiUrl . '?key=' . $cleanKey;
+
+            $result = \CommonHelper::execute_curl_request($endpoint, $data, $headers, 'POST');
 
             if ($result['error']) {
                 $errorMsg = 'Hệ thống trợ lý ảo đang bảo trì. 🙏';
@@ -120,17 +125,17 @@ class ChatBotController extends BaseController
                 $errorMsg = 'Hệ thống trợ lý ảo đang bảo trì. 🙏';
                 if (\Config::bool('APP_DEBUG')) {
                     if ($response && isset($response['error'])) {
-                        $groqError = $response['error']['message'] ?? json_encode($response['error']);
+                        $geminiError = $response['error']['message'] ?? json_encode($response['error']);
                     } else {
-                        // Nếu không phải JSON (có thể là trang HTML 403 của Cloudflare)
-                        $groqError = substr(strip_tags($responseBody), 0, 100); 
+                        // Nếu không phải JSON
+                        $geminiError = substr(strip_tags($responseBody), 0, 100); 
                     }
-                    $errorMsg .= " (Groq Error $httpCode: $groqError)";
+                    $errorMsg .= " (Gemini Error $httpCode: $geminiError)";
                 }
                 return $this->json(['reply' => $errorMsg]);
             }
 
-            $botMessage = $response['choices'][0]['message']['content'] ?? 'Tôi đang bận một chút, bạn thử lại sau nhen!';
+            $botMessage = $response['candidates'][0]['content']['parts'][0]['text'] ?? 'Tôi đang bận một chút, bạn thử lại sau nhen!';
 
             return $this->json(['reply' => $botMessage]);
         } catch (\Throwable $e) {
