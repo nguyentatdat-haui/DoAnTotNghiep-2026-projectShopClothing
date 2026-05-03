@@ -83,11 +83,21 @@ class ChatBotController extends BaseController
         $result = \CommonHelper::execute_curl_request($apiUrl, $data, $headers, 'POST');
         
         if ($result['error']) {
-            return $this->json(['reply' => 'Không thể kết nối với LM Studio. Vui lòng đảm bảo ứng dụng đang chạy và Server đã bật.']);
+            return $this->json(['reply' => 'Không thể kết nối với LM Studio. Lỗi: ' . $result['error']]);
         }
 
-        $response = json_decode($result['response'], true);
-        $botMessage = $response['choices'][0]['message']['content'] ?? 'LM Studio không phản hồi đúng định dạng.';
+        $responseBody = $result['response'];
+        $response = json_decode($responseBody, true);
+        
+        if (isset($response['choices'][0]['message']['content'])) {
+            $botMessage = $response['choices'][0]['message']['content'];
+        } else {
+            // Log for debugging if format is unexpected
+            if (\Config::bool('APP_DEBUG')) {
+                return $this->json(['reply' => 'LM Studio phản hồi định dạng lạ. Nội dung: ' . substr($responseBody, 0, 200)]);
+            }
+            $botMessage = 'LM Studio không phản hồi đúng định dạng OpenAI.';
+        }
 
         return $this->json(['reply' => $botMessage]);
     }
